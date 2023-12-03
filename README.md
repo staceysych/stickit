@@ -1,1 +1,1 @@
-# stickit
+# Stick It

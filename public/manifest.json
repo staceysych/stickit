@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "Stick It",
+  "icons": {
+    "32": "icon-32.png",
+    "128": "icon-128.png"
+  },
+  "version": "1.0.0",
+  "action": {
+    "default_popup": "index.html"
+  },
+  "permissions": ["scripting"],
+  "host_permissions": ["<all_urls>"]
+}
