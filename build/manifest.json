@@ -5,10 +5,17 @@
     "32": "icon-32.png",
     "128": "icon-128.png"
   },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["contentScript/index.js"],
+      "css": ["contentScript/styles.css"]
+    }
+  ],
   "version": "1.0.0",
   "action": {
     "default_popup": "index.html"
   },
-  "permissions": ["scripting"],
+  "permissions": ["storage", "tabs", "scripting"],
   "host_permissions": ["<all_urls>"]
 }

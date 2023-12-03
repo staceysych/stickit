@@ -1,0 +1,40 @@
+.note_container {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    box-shadow: 10px 5px 10px black;
+    min-height: 250px;
+    width: 250px;
+    resize: both;
+    overflow: auto;
+
+    box-sizing: border-box;
+    border-radius: 15px;
+
+    padding: 0;
+    margin: 0;
+}
+
+.note_container div {
+    box-shadow: none;
+    box-sizing: border-box
+}
+
+.note_header {
+    padding: 0;
+    margin: 0;
+    width: auto;
+    height: 45px;
+    background-color: #3E2ABA;
+    border-radius: 0;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+}
+
+.note_body {
+    margin: 0;
+    padding: 10px;
+    width: auto;
+    outline: none;
+    font-size: 16px;
+}
