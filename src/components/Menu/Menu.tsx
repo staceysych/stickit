@@ -1,6 +1,7 @@
 import StickyNote2Icon from "@mui/icons-material/StickyNote2";
 
 import { StyledListItem, StyledList } from "./Menu.styled";
+import ReactDOM from "react-dom/client";
 
 const Menu = () => {
   const handleClick = async () => {
@@ -11,7 +12,14 @@ const Menu = () => {
     chrome.scripting.executeScript<string[], void>({
       target: { tabId: tab.id! },
       func: () => {
-        alert("Hello, world!");
+        // const target = document.createElement("div");
+
+        // document.body.appendChild(target);
+
+        // ReactDOM.createRoot(target).render(<div>hello</div>);
+        ReactDOM.createRoot(document.createElement("div")).render(
+          <h1>Hello work</h1>
+        );
       },
     });
   };
