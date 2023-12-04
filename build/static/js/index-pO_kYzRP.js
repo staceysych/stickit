@@ -138,4 +138,4 @@ Error generating stack: `+i.message+`
   &:hover {
     background-color: #f5f5f51a;
   }
-`,Jk=()=>{const e=async()=>{const[t]=await chrome.tabs.query({active:!0,currentWindow:!0});t.id&&t.url&&chrome.tabs.sendMessage(t.id,{type:"NEW_NOTE",url:t.url,content:""})};return G.jsx(Zk,{children:G.jsxs(qk,{onClick:e,children:[G.jsx(oh,{fontSize:"small"})," Create a new note"]})})};function ex(){return G.jsx(Jk,{})}js.createRoot(document.getElementById("root")).render(G.jsx(at.StrictMode,{children:G.jsx(ex,{})}));
+`,Jk=()=>{const e=async()=>{const[t]=await chrome.tabs.query({active:!0,currentWindow:!0});console.log(document.body),t.id&&t.url&&chrome.tabs.sendMessage(t.id,{type:"NEW_NOTE",url:t.url,content:""})};return G.jsx(Zk,{children:G.jsxs(qk,{onClick:e,children:[G.jsx(oh,{fontSize:"small"})," Create a new note"]})})};function ex(){return G.jsx(Jk,{})}js.createRoot(document.getElementById("root")).render(G.jsx(at.StrictMode,{children:G.jsx(ex,{})}));

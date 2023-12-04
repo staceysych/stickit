@@ -5,6 +5,9 @@
     "32": "icon-32.png",
     "128": "icon-128.png"
   },
+  "background": {
+    "service_worker": "serviceWorker/index.js"
+  },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],

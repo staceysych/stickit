@@ -8,6 +8,8 @@ const Menu = () => {
       active: true,
       currentWindow: true,
     });
+
+    console.log(document.body);
     
     if (tab.id && tab.url) {
       chrome.tabs.sendMessage(tab.id, {
