@@ -6,7 +6,7 @@ export const StyledList = styled(List)`
   align-items: center;
   justify-content: center;
   background-color: #ffffff1c;
-  width: 100vw;
+  width: 200px;
 `;
 
 export const StyledListItem = styled(ListItem)`

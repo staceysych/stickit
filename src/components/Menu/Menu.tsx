@@ -1,20 +1,17 @@
+import { StyledList, StyledListItem } from "./Menu.styled";
+import React from "react";
 import StickyNote2Icon from "@mui/icons-material/StickyNote2";
+import { Messages } from "../../utils/messages";
 
-import { StyledListItem, StyledList } from "./Menu.styled";
-
-const Menu = () => {
+const Menu: React.FC<{}> = () => {
   const handleClick = async () => {
-    const [tab] = await chrome.tabs.query({
+    const tabs = await chrome.tabs.query({
       active: true,
       currentWindow: true,
     });
-    
-    if (tab.id && tab.url) {
-      chrome.tabs.sendMessage(tab.id, {
-        type: 'NEW_NOTE',
-        url: tab.url,
-        content: ''
-      })
+
+    if (tabs.length > 0) {
+      chrome.tabs.sendMessage(tabs[0].id, { type: Messages.NEW_NOTE });
     }
   };
   return (
