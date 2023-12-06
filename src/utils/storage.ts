@@ -1,4 +1,3 @@
-// import { OpenWeatherTempScale } from './api'
 import uniqid from "uniqid";
 import { generateRandomColor } from "./colors";
 import { NoteType } from "../types/noteType";
