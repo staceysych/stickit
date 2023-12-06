@@ -1,6 +1,9 @@
 import React from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import PushPinIcon from "@mui/icons-material/PushPin";
+import Draggable from 'react-draggable';
+
+import { NoteType } from '../../types/noteType'
 
 import {
   StyledCard,
@@ -11,45 +14,38 @@ import {
   StyledTextField,
 } from "./Note.styled";
 
-import { colorPalette } from "../../utils/colors";
+const DraggableComponent: any = Draggable;
 
-const generateRandomColor = () => {
-  const colors = Object.values(colorPalette);
-  return colors[Math.floor(Math.random() * colors.length)];
-};
+interface NotePropsType {
+  note: NoteType
+}
 
-const generateRandomCoordinates = () => {
-  const x = Math.abs(Math.random() * window.innerWidth);
-  const y = Math.abs(Math.random() * window.innerHeight);
-  return { x, y };
-};
 
-const Note = () => {
-  const { light, main } = generateRandomColor();
-  const { x, y } = generateRandomCoordinates();
-
-  console.log(x, y);
+const Note = (props: NotePropsType) => {
+  const {width, height, top, left, content, color } = props.note
 
   return (
-    <StyledCard coords={{ x, y }}>
-      <StyledHeader background={main}>
-        <StyledHeaderActions size="small">
-          <PushPinIcon fontSize="small" />
-        </StyledHeaderActions>
-        <StyledHeaderText>New Note</StyledHeaderText>
-        <StyledHeaderActions size="small">
-          <MoreVertIcon fontSize="small" />
-        </StyledHeaderActions>
-      </StyledHeader>
-      <StyledBody>
-        <StyledTextField
-          placeholder="Take a note..."
-          multiline
-          background={light}
-          autoFocus
-        />
-      </StyledBody>
-    </StyledCard>
+    <DraggableComponent>
+      <StyledCard coords={{ left, top, width, height }}>
+        <StyledHeader background={color}>
+          <StyledHeaderActions size="small">
+            <PushPinIcon fontSize="small" />
+          </StyledHeaderActions>
+          <StyledHeaderText>New Note</StyledHeaderText>
+          <StyledHeaderActions size="small">
+            <MoreVertIcon fontSize="small" />
+          </StyledHeaderActions>
+        </StyledHeader>
+        <StyledBody>
+          <StyledTextField
+            placeholder="Take a note..."
+            multiline
+            background={color}
+            autoFocus
+          />
+        </StyledBody>
+      </StyledCard>
+    </DraggableComponent>
   );
 };
 

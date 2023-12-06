@@ -14,10 +14,24 @@ const Menu: React.FC<{}> = () => {
       chrome.tabs.sendMessage(tabs[0].id, { type: Messages.NEW_NOTE });
     }
   };
+
+  const deleteAllNotes = async () => {
+    const tabs = await chrome.tabs.query({
+      active: true,
+      currentWindow: true,
+    });
+
+    if (tabs.length > 0) {
+      chrome.tabs.sendMessage(tabs[0].id, { type: Messages.DELETE_ALL });
+    }
+  };
   return (
     <StyledList>
       <StyledListItem onClick={handleClick}>
         <StickyNote2Icon fontSize="small" /> Create a new note
+      </StyledListItem>
+      <StyledListItem onClick={deleteAllNotes}>
+        <StickyNote2Icon fontSize="small" /> Delete all notes from page
       </StyledListItem>
     </StyledList>
   );

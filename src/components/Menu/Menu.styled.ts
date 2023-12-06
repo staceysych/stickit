@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 export const StyledList = styled(List)`
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   background-color: #ffffff1c;

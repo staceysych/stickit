@@ -1,6 +1,6 @@
 {
-  "name": "Weather Extension",
-  "description": "Weather Extension in React!",
+  "name": "StickIt",
+  "description": "Taking notes inside a browser!",
   "version": "1.0.0",
   "manifest_version": 3,
   "icons": {
@@ -11,7 +11,7 @@
     "default_popup": "popup.html",
     "default_title": "Weather Extension"
   },
-  "permissions": ["alarms", "contextMenus", "storage"],
+  "permissions": ["storage", "tabs", "scripting"],
   "options_page": "options.html",
   "background": {
     "service_worker": "background.js"

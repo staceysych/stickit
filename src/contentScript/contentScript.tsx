@@ -2,17 +2,30 @@ import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 
 import { Messages } from "../utils/messages";
+import { NoteType } from "../types/noteType";
+import { addNoteToStorage, fetchNotes } from "../utils/storage";
 import "./contentScript.css";
 
 import Note from "../components/Note";
 
 const App: React.FC<{}> = () => {
-  const [isActive, setIsActive] = useState<boolean>(false);
+  const [notes, setNotes] = useState<NoteType[]>([]);
+  const [currentPageUrl, setCurrentPageUrl] = useState<string>("");
 
-  const handleMessages = ({ type }) => {
-    console.log(type);
+  const handleMessages = async ({ type, data }) => {
     if (type === Messages.NEW_NOTE) {
-      setIsActive(!isActive);
+      const newNote = await addNoteToStorage(currentPageUrl);
+      setNotes((prevNotes) => [...prevNotes, newNote]);
+    }
+    if (type === Messages.NEW_PAGE) {
+      setCurrentPageUrl(data.url);
+      const notes = await fetchNotes(data.url);
+
+      setNotes(notes);
+    }
+    if (type === Messages.DELETE_ALL) {
+      chrome.storage.sync.remove(currentPageUrl)
+      setNotes([]);
     }
   };
 
@@ -21,11 +34,18 @@ const App: React.FC<{}> = () => {
     return () => {
       chrome.runtime.onMessage.removeListener(handleMessages);
     };
-  }, [isActive]);
+  }, [currentPageUrl]);
 
-  return <>{isActive && <Note />}</>;
+  return (
+    <>
+      {notes.map((note) => (
+        <Note key={note._id} note={note} />
+      ))}
+    </>
+  );
 };
 
 const root = document.createElement("div");
+
 document.body.appendChild(root);
 ReactDOM.render(<App />, root);
