@@ -1,9 +1,9 @@
 import React from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import PushPinIcon from "@mui/icons-material/PushPin";
-import Draggable from 'react-draggable';
+import Draggable from "react-draggable";
 
-import { NoteType } from '../../types/noteType'
+import { NoteType } from "../../types/noteType";
 
 import {
   StyledCard,
@@ -17,12 +17,11 @@ import {
 const DraggableComponent: any = Draggable;
 
 interface NotePropsType {
-  note: NoteType
+  note: NoteType;
 }
 
-
 const Note = (props: NotePropsType) => {
-  const {width, height, top, left, content, color } = props.note
+  const { width, height, top, left, content, color } = props.note;
 
   return (
     <DraggableComponent>

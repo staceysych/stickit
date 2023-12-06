@@ -24,7 +24,7 @@ const App: React.FC<{}> = () => {
       setNotes(notes);
     }
     if (type === Messages.DELETE_ALL) {
-      chrome.storage.sync.remove(currentPageUrl)
+      chrome.storage.sync.remove(currentPageUrl);
       setNotes([]);
     }
   };
