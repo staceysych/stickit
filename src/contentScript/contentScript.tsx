@@ -13,19 +13,28 @@ const App: React.FC<{}> = () => {
   const [currentPageUrl, setCurrentPageUrl] = useState<string>("");
 
   const handleMessages = async ({ type, data }) => {
-    if (type === Messages.NEW_NOTE) {
-      const newNote = await addNoteToStorage(currentPageUrl);
-      setNotes((prevNotes) => [...prevNotes, newNote]);
-    }
-    if (type === Messages.NEW_PAGE) {
-      setCurrentPageUrl(data.url);
-      const notes = await fetchNotes(data.url);
+    switch(type) {
+      case Messages.NEW_NOTE: {
+        const newNote = await addNoteToStorage(currentPageUrl);
+        setNotes((prevNotes) => [...prevNotes, newNote]);
 
-      setNotes(notes);
-    }
-    if (type === Messages.DELETE_ALL) {
-      chrome.storage.sync.remove(currentPageUrl);
-      setNotes([]);
+        break;
+      }
+      case Messages.NEW_PAGE: {
+        setCurrentPageUrl(data.url);
+        const notes = await fetchNotes(data.url);
+  
+        setNotes(notes);
+
+        break;
+      }
+      case Messages.DELETE_ALL: {
+        chrome.storage.sync.remove(currentPageUrl);
+        setNotes([]);
+
+        break;
+      }
+      default: {}
     }
   };
 

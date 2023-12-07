@@ -1,6 +1,7 @@
 import { StyledList, StyledListItem } from "./Menu.styled";
 import React from "react";
 import StickyNote2Icon from "@mui/icons-material/StickyNote2";
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { Messages } from "../../utils/messages";
 
 const Menu: React.FC<{}> = () => {
@@ -31,7 +32,7 @@ const Menu: React.FC<{}> = () => {
         <StickyNote2Icon fontSize="small" /> Create a new note
       </StyledListItem>
       <StyledListItem onClick={deleteAllNotes}>
-        <StickyNote2Icon fontSize="small" /> Delete all notes from page
+        <DeleteForeverIcon fontSize="small" /> Delete all notes from page
       </StyledListItem>
     </StyledList>
   );
