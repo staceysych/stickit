@@ -1,5 +1,6 @@
 import { Card, Box, Typography, IconButton, TextField } from "@mui/material";
 import styled from "styled-components";
+import {colorPalette} from '../../utils/colors'
 
 interface StyledHeaderProps {
   background: string;
@@ -7,8 +8,10 @@ interface StyledHeaderProps {
 
 interface StyledCardProps {
   coords: {
-    x: number;
-    y: number;
+    left: number;
+    top: number;
+    width: number;
+    height: number;
   };
 }
 
@@ -19,20 +22,20 @@ export const StyledCard = styled(Card)<StyledCardProps>`
   flex-direction: column;
   padding: 0;
   margin: 0;
-  width: 300px;
-  height: 300px;
+  width: ${(props) => props.coords.width }px;
+  height: ${(props) => props.coords.height }px;
   border-radius: 8px !important;
   position: fixed;
   z-index: 9999;
-  top: ${(props) => props.coords.x}px;
-  right: ${(props) => props.coords.y}px;
+  top: ${(props) => props.coords.top }px;
+  left: ${(props) => props.coords.left }px;
 `;
 
 export const StyledHeader = styled(Box)<StyledHeaderProps>`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: ${(props) => props.background};
+  background-color: ${(props) => colorPalette[props.background].main};
   width: 100%;
   padding: 0;
   margin: 0;
@@ -64,7 +67,7 @@ export const StyledTextField = styled(TextField)<StyledHeaderProps>`
     width: 100%;
     margin: 0;
     border-radius: 0;
-    background-color: ${(props) => props.background};
+    background-color: ${(props) => colorPalette[props.background].light};
   }
 
   fieldset {

@@ -8,12 +8,14 @@
   },
   "author": "",
   "dependencies": {
-    "styled-components": "6.1.0",
+    "@emotion/react": "11.11.1",
+    "@emotion/styled": "11.11.0",
+    "@mui/icons-material": "5.14.16",
     "@mui/material": "5.14.16",
     "@mui/styled-engine-sc": "6.0.0-alpha.4",
-    "@mui/icons-material": "5.14.16",
-    "@emotion/react": "11.11.1",
-    "@emotion/styled": "11.11.0"
+    "react-draggable": "^4.4.6",
+    "styled-components": "6.1.0",
+    "uniqid": "^5.4.0"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.134",

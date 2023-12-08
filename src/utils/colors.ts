@@ -5,3 +5,8 @@ export const colorPalette = {
   orange: { main: "#F29F80", light: "rgba(242, 159, 128, 0.15)" },
   pink: { main: "#F26363", light: "rgba(242, 99, 99, 0.15)" },
 };
+
+export const generateRandomColor = () => {
+  const colors = Object.keys(colorPalette);
+  return colors[Math.floor(Math.random() * colors.length)];
+};

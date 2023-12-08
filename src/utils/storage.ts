@@ -1,54 +1,40 @@
-import { OpenWeatherTempScale } from './api'
+import uniqid from "uniqid";
+import { generateRandomColor } from "./colors";
+import { NoteType } from "../types/noteType";
 
-export interface LocalStorage {
-  cities?: string[]
-  options?: LocalStorageOptions
-}
+export const clearStorage = () => {};
 
-export interface LocalStorageOptions {
-  hasAutoOverlay: boolean
-  homeCity: string
-  tempScale: OpenWeatherTempScale
-}
-
-export type LocalStorageKeys = keyof LocalStorage
-
-export function setStoredCities(cities: string[]): Promise<void> {
-  const vals: LocalStorage = {
-    cities,
-  }
+export const fetchNotes = async (url: string): Promise<any[]> => {
   return new Promise((resolve) => {
-    chrome.storage.local.set(vals, () => {
-      resolve()
-    })
-  })
-}
+    chrome.storage.sync.get([url], (notes) => {
+      resolve(notes[url] ? JSON.parse(notes[url]) : []);
+    });
+  });
+};
 
-export function getStoredCities(): Promise<string[]> {
-  const keys: LocalStorageKeys[] = ['cities']
-  return new Promise((resolve) => {
-    chrome.storage.local.get(keys, (res: LocalStorage) => {
-      resolve(res.cities ?? [])
-    })
-  })
-}
+export const addNoteToStorage = async (currentPageUrl: string): Promise<NoteType> => {
+  const _id: string = uniqid();
+  const color = generateRandomColor();
 
-export function setStoredOptions(options: LocalStorageOptions): Promise<void> {
-  const vals: LocalStorage = {
-    options,
-  }
-  return new Promise((resolve) => {
-    chrome.storage.local.set(vals, () => {
-      resolve()
-    })
-  })
-}
+  const noteData: NoteType = {
+    _id,
+    width: 300,
+    height: 300,
+    top: 1,
+    left: 1,
+    content: "Make a note",
+    color,
+    createdOn: new Date(),
+  };
 
-export function getStoredOptions(): Promise<LocalStorageOptions> {
-  const keys: LocalStorageKeys[] = ['options']
-  return new Promise((resolve) => {
-    chrome.storage.local.get(keys, (res: LocalStorage) => {
-      resolve(res.options)
-    })
-  })
-}
+  const currentNoteList = await fetchNotes(currentPageUrl);
+  const updatedNoteList = [...currentNoteList, noteData].sort(
+    (a, b) => a.createdOn - b.createdOn
+  );
+
+  await chrome.storage.sync.set({
+    [currentPageUrl]: JSON.stringify(updatedNoteList),
+  });
+
+  return noteData;
+};
