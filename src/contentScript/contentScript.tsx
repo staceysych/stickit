@@ -27,7 +27,10 @@ const App = () => {
   const [notes, setNotes] = useState<NoteType[]>([]);
   const [currentPageUrl, setCurrentPageUrl] = useState<string>("");
 
+  console.log({ notes });
+
   const handleMessages = async ({ type, data }: IMessage) => {
+    console.log({ type });
     switch (type) {
       case Messages.NEW_NOTE: {
         const newNote = await addNoteToStorage(currentPageUrl);
@@ -60,19 +63,11 @@ const App = () => {
   };
 
   useEffect(() => {
-    const a = async () => {
-      chrome.runtime.sendMessage({ type: Messages.UPDATE_NOTES });
-    };
-
-    a();
-  }, []);
-
-  useEffect(() => {
     chrome.runtime.onMessage.addListener(handleMessages);
     return () => {
       chrome.runtime.onMessage.removeListener(handleMessages);
     };
-  }, [currentPageUrl]);
+  }, [currentPageUrl, notes]);
 
   return (
     <>

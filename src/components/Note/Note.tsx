@@ -32,6 +32,9 @@ const Note = (props: NotePropsType) => {
         item._id === note._id ? note : item
       );
 
+      chrome.runtime.sendMessage({
+        type: Messages.UPDATE_NOTES,
+      });
       return updatedNotes;
     });
   };
