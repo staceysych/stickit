@@ -30,7 +30,7 @@ const Note = (props: NotePropsType) => {
   const [note, setNote] = useState<NoteType>(props.note);
   const { width, height, top, left, content, color } = note;
 
-  const [text, setText] = useState(content);
+  const [text, setText] = useState<string>(content);
   const [debouncedText] = useDebounce(text, 400);
 
   const handleUpdateNotes = async () => {
@@ -45,7 +45,7 @@ const Note = (props: NotePropsType) => {
     });
   };
 
-  const onResizeStop = (e, _, ref) => {
+  const onResizeStop = (_e, _, ref) => {
     const { top, left } = ref.getBoundingClientRect();
 
     const updateNote = {
@@ -59,7 +59,7 @@ const Note = (props: NotePropsType) => {
     setNote(updateNote);
   };
 
-  const handleDragStop = (e, data) => {
+  const handleDragStop = (_e, data) => {
     const updateNote = {
       ...note,
       top: data.y,

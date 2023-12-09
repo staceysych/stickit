@@ -2,12 +2,11 @@ import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import "./contentScript.css";
 
-import { Messages, handleNotesUpdate } from "../utils/messages";
+import { Messages } from "../utils/messages";
 import { NoteType } from "../types/noteType";
 import {
   addNoteToStorage,
   fetchNotes,
-  updateNotesInStorage,
 } from "../utils/storage";
 import "./contentScript.css";
 
@@ -27,10 +26,7 @@ const App = () => {
   const [notes, setNotes] = useState<NoteType[]>([]);
   const [currentPageUrl, setCurrentPageUrl] = useState<string>("");
 
-  console.log({ notes });
-
   const handleMessages = async ({ type, data }: IMessage) => {
-    console.log({ type });
     switch (type) {
       case Messages.NEW_NOTE: {
         const newNote = await addNoteToStorage(currentPageUrl);
@@ -53,8 +49,7 @@ const App = () => {
 
         break;
       }
-      default: {
-      }
+      default: {}
     }
   };
 
@@ -63,7 +58,7 @@ const App = () => {
     return () => {
       chrome.runtime.onMessage.removeListener(handleMessages);
     };
-  }, [currentPageUrl, notes]);
+  }, [currentPageUrl]);
 
   return (
     <>
