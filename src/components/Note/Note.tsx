@@ -2,13 +2,14 @@ import React from "react";
 import { useDebounce } from "use-debounce";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import PushPinIcon from "@mui/icons-material/PushPin";
-import DraggableComponent from "../DraggableComponent";
+import "./note.css";
 
 import { updateNotesInStorage } from "../../utils/storage";
 
 import { NoteType } from "../../types/noteType";
 
 import {
+  StyledRnd,
   StyledCard,
   StyledHeader,
   StyledHeaderText,
@@ -17,8 +18,6 @@ import {
   StyledTextField,
 } from "./Note.styled";
 import { Dispatch, useEffect, useState } from "react";
-
-import { Messages, handleNotesUpdate } from "../../utils/messages";
 
 interface NotePropsType {
   note: NoteType;
@@ -46,6 +45,20 @@ const Note = (props: NotePropsType) => {
     });
   };
 
+  const onResizeStop = (e, _, ref) => {
+    const { top, left } = ref.getBoundingClientRect();
+
+    const updateNote = {
+      ...note,
+      width: ref.offsetWidth,
+      height: ref.offsetHeight,
+      left: left,
+      top: top,
+    };
+
+    setNote(updateNote);
+  };
+
   const handleDragStop = (e, data) => {
     const updateNote = {
       ...note,
@@ -56,17 +69,17 @@ const Note = (props: NotePropsType) => {
     setNote(updateNote);
   };
 
+  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setText(e.target.value);
+  };
+
   const handleDebounceChange = () => {
     const updateNote = {
       ...note,
       content: debouncedText,
     };
-    console.log("object");
-    setNote(updateNote);
-  };
 
-  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setText(e.target.value);
+    setNote(updateNote);
   };
 
   useEffect(() => {
@@ -74,20 +87,18 @@ const Note = (props: NotePropsType) => {
   }, [debouncedText]);
 
   useEffect(() => {
-    console.log("2");
     handleUpdateNotes();
   }, [note]);
 
   return (
-    <DraggableComponent
-      position={{
-        x: left,
-        y: top,
-      }}
-      onStop={handleDragStop}
-      handle=".handle"
+    <StyledRnd
+      default={{ width: width, height: height, x: left, y: top }}
+      onDragStop={handleDragStop}
+      onResizeStop={onResizeStop}
+      dragHandleClassName="handle"
+      resizeHandleWrapperClass={"resizeHandleWrapperClass"}
     >
-      <StyledCard coords={{ left, top, width, height }}>
+      <StyledCard>
         <StyledHeader background={color} className="handle">
           <StyledHeaderActions size="small">
             <PushPinIcon fontSize="small" />
@@ -107,7 +118,7 @@ const Note = (props: NotePropsType) => {
           />
         </StyledBody>
       </StyledCard>
-    </DraggableComponent>
+    </StyledRnd>
   );
 };
 

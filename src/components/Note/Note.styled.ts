@@ -1,35 +1,32 @@
 import { Card, Box, Typography, IconButton, TextField } from "@mui/material";
+import {Rnd} from 'react-rnd'
 import styled from "styled-components";
 import { colorPalette } from "../../utils/colors";
+
 
 interface StyledHeaderProps {
   background: string;
 }
 
-interface StyledCardProps {
-  coords: {
-    left: number;
-    top: number;
-    width: number;
-    height: number;
-  };
-}
+export const StyledRnd = styled(Rnd)`
+  position: "fixed";
+  padding: 0;
+  margin: 0;
+  z-index: 9999;
+`;
 
 // toDo: Change position to absolute and fix creation of the note (if absolute created at the bottom)
-export const StyledCard = styled(Card)<StyledCardProps>`
+export const StyledCard = styled(Card)`
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
   flex-direction: column;
   padding: 0;
   margin: 0;
-  width: ${(props) => props.coords.width}px;
-  height: ${(props) => props.coords.height}px;
+  width: 100%;
+  height: 100%;
   border-radius: 8px !important;
   position: fixed;
-  z-index: 9999;
-  top: 0;
-  left: 0;
 
   * {
     box-sizing: border-box;
