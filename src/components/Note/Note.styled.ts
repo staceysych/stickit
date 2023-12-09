@@ -15,7 +15,6 @@ export const StyledRnd = styled(Rnd)`
   z-index: 9999;
 `;
 
-// toDo: Change position to absolute and fix creation of the note (if absolute created at the bottom)
 export const StyledCard = styled(Card)`
   display: flex;
   align-items: flex-start;
