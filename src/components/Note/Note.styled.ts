@@ -15,6 +15,7 @@ interface StyledCardProps {
   };
 }
 
+// toDo: Change position to absolute and fix creation of the note (if absolute created at the bottom)
 export const StyledCard = styled(Card)<StyledCardProps>`
   display: flex;
   align-items: flex-start;
@@ -25,7 +26,7 @@ export const StyledCard = styled(Card)<StyledCardProps>`
   width: ${(props) => props.coords.width}px;
   height: ${(props) => props.coords.height}px;
   border-radius: 8px !important;
-  position: absolute;
+  position: fixed;
   z-index: 9999;
   top: 0;
   left: 0;
