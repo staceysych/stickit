@@ -8,6 +8,7 @@ interface DraggableComponentProps {
   children: React.ReactNode;
   onStop: DraggableEventHandler;
   position: ControlPosition;
+  handle: string,
 }
 
 const DraggableComponent = ({
@@ -17,9 +18,10 @@ const DraggableComponent = ({
     x: 0,
     y: 0,
   },
+  handle,
 }: DraggableComponentProps) => {
   return (
-    <Draggable position={position} onStop={onStop}>
+    <Draggable position={position} onStop={onStop} handle={handle}>
       {children}
     </Draggable>
   );

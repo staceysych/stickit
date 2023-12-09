@@ -49,3 +49,4 @@ export const updateNotesInStorage = async (
     [currentPageUrl]: JSON.stringify(notes),
   });
 };
+

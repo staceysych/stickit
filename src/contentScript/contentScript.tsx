@@ -41,6 +41,7 @@ const App = () => {
       case Messages.NEW_PAGE: {
         setCurrentPageUrl(data.url);
         const notes = await fetchNotes(data.url);
+        console.log(notes);
 
         setNotes(notes);
 
@@ -49,11 +50,6 @@ const App = () => {
       case Messages.DELETE_ALL: {
         chrome.storage.sync.remove(currentPageUrl);
         setNotes([]);
-
-        break;
-      }
-      case Messages.UPDATE_NOTES: {
-        await updateNotesInStorage(notes, currentPageUrl);
 
         break;
       }
@@ -72,7 +68,7 @@ const App = () => {
   return (
     <>
       {notes.map((note) => (
-        <Note key={note._id} note={note} setNotes={setNotes} />
+        <Note key={note._id} note={note} setNotes={setNotes} currentPageUrl={currentPageUrl} />
       ))}
     </>
   );

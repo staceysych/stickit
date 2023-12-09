@@ -25,7 +25,7 @@ export const StyledCard = styled(Card)<StyledCardProps>`
   width: ${(props) => props.coords.width}px;
   height: ${(props) => props.coords.height}px;
   border-radius: 8px !important;
-  position: fixed;
+  position: absolute;
   z-index: 9999;
   top: 0;
   left: 0;

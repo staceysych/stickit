@@ -1,6 +1,10 @@
+import React from "react";
+import { useDebounce } from "use-debounce";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import PushPinIcon from "@mui/icons-material/PushPin";
 import DraggableComponent from "../DraggableComponent";
+
+import { updateNotesInStorage } from "../../utils/storage";
 
 import { NoteType } from "../../types/noteType";
 
@@ -19,6 +23,7 @@ import { Messages, handleNotesUpdate } from "../../utils/messages";
 interface NotePropsType {
   note: NoteType;
   setNotes: Dispatch<React.SetStateAction<NoteType[]>>;
+  currentPageUrl;
 }
 
 const Note = (props: NotePropsType) => {
@@ -26,15 +31,17 @@ const Note = (props: NotePropsType) => {
   const [note, setNote] = useState<NoteType>(props.note);
   const { width, height, top, left, content, color } = note;
 
+  const [text, setText] = useState(content);
+  const [debouncedText] = useDebounce(text, 400);
+
   const handleUpdateNotes = async () => {
     setNotes((prevNotes) => {
       const updatedNotes = prevNotes.map((item) =>
         item._id === note._id ? note : item
       );
 
-      chrome.runtime.sendMessage({
-        type: Messages.UPDATE_NOTES,
-      });
+      updateNotesInStorage(updatedNotes, props.currentPageUrl);
+
       return updatedNotes;
     });
   };
@@ -49,7 +56,25 @@ const Note = (props: NotePropsType) => {
     setNote(updateNote);
   };
 
+  const handleDebounceChange = () => {
+    const updateNote = {
+      ...note,
+      content: debouncedText,
+    };
+    console.log("object");
+    setNote(updateNote);
+  };
+
+  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setText(e.target.value);
+  };
+
   useEffect(() => {
+    handleDebounceChange();
+  }, [debouncedText]);
+
+  useEffect(() => {
+    console.log("2");
     handleUpdateNotes();
   }, [note]);
 
@@ -60,9 +85,10 @@ const Note = (props: NotePropsType) => {
         y: top,
       }}
       onStop={handleDragStop}
+      handle=".handle"
     >
       <StyledCard coords={{ left, top, width, height }}>
-        <StyledHeader background={color}>
+        <StyledHeader background={color} className="handle">
           <StyledHeaderActions size="small">
             <PushPinIcon fontSize="small" />
           </StyledHeaderActions>
@@ -76,7 +102,8 @@ const Note = (props: NotePropsType) => {
             placeholder="Take a note..."
             multiline
             background={color}
-            autoFocus
+            value={text}
+            onChange={onInputChange}
           />
         </StyledBody>
       </StyledCard>

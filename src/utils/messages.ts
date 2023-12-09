@@ -13,7 +13,7 @@ export const handleNotesUpdate = async (notes: NoteType[]) => {
     currentWindow: true,
   });
 
-  if (tabs.length > 0) {
+  if (tabs.length > 0 && tabs[0].id) {
     chrome.tabs.sendMessage(tabs[0].id, {
       type: Messages.UPDATE_NOTES,
     });
