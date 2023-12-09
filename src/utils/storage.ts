@@ -12,14 +12,16 @@ export const fetchNotes = async (url: string): Promise<any[]> => {
   });
 };
 
-export const addNoteToStorage = async (currentPageUrl: string): Promise<NoteType> => {
+export const addNoteToStorage = async (
+  currentPageUrl: string
+): Promise<NoteType> => {
   const _id: string = uniqid();
   const color = generateRandomColor();
 
   const noteData: NoteType = {
     _id,
-    width: 300,
-    height: 300,
+    width: 200,
+    height: 200,
     top: 1,
     left: 1,
     content: "Make a note",
@@ -37,4 +39,13 @@ export const addNoteToStorage = async (currentPageUrl: string): Promise<NoteType
   });
 
   return noteData;
+};
+
+export const updateNotesInStorage = async (
+  notes: NoteType[],
+  currentPageUrl: string
+) => {
+  await chrome.storage.sync.set({
+    [currentPageUrl]: JSON.stringify(notes),
+  });
 };

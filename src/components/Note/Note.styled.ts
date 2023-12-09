@@ -1,6 +1,6 @@
 import { Card, Box, Typography, IconButton, TextField } from "@mui/material";
 import styled from "styled-components";
-import {colorPalette} from '../../utils/colors'
+import { colorPalette } from "../../utils/colors";
 
 interface StyledHeaderProps {
   background: string;
@@ -22,13 +22,17 @@ export const StyledCard = styled(Card)<StyledCardProps>`
   flex-direction: column;
   padding: 0;
   margin: 0;
-  width: ${(props) => props.coords.width }px;
-  height: ${(props) => props.coords.height }px;
+  width: ${(props) => props.coords.width}px;
+  height: ${(props) => props.coords.height}px;
   border-radius: 8px !important;
   position: fixed;
   z-index: 9999;
-  top: ${(props) => props.coords.top }px;
-  left: ${(props) => props.coords.left }px;
+  top: 0;
+  left: 0;
+
+  * {
+    box-sizing: border-box;
+  }
 `;
 
 export const StyledHeader = styled(Box)<StyledHeaderProps>`
@@ -37,11 +41,12 @@ export const StyledHeader = styled(Box)<StyledHeaderProps>`
   justify-content: space-between;
   background-color: ${(props) => colorPalette[props.background].main};
   width: 100%;
-  padding: 0;
   margin: 0;
   height: 50px;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+  padding: 0 4px;
+  cursor: pointer;
 `;
 export const StyledHeaderText = styled(Typography)``;
 export const StyledHeaderActions = styled(IconButton)`

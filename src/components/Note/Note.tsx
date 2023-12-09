@@ -1,7 +1,6 @@
-import React from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import PushPinIcon from "@mui/icons-material/PushPin";
-import Draggable from "react-draggable";
+import DraggableComponent from "../DraggableComponent";
 
 import { NoteType } from "../../types/noteType";
 
@@ -13,18 +12,52 @@ import {
   StyledBody,
   StyledTextField,
 } from "./Note.styled";
+import { Dispatch, useEffect, useState } from "react";
 
-const DraggableComponent: any = Draggable;
+import { Messages, handleNotesUpdate } from "../../utils/messages";
 
 interface NotePropsType {
   note: NoteType;
+  setNotes: Dispatch<React.SetStateAction<NoteType[]>>;
 }
 
 const Note = (props: NotePropsType) => {
-  const { width, height, top, left, content, color } = props.note;
+  const { setNotes } = props;
+  const [note, setNote] = useState<NoteType>(props.note);
+  const { width, height, top, left, content, color } = note;
+
+  const handleUpdateNotes = async () => {
+    setNotes((prevNotes) => {
+      const updatedNotes = prevNotes.map((item) =>
+        item._id === note._id ? note : item
+      );
+
+      return updatedNotes;
+    });
+  };
+
+  const handleDragStop = (e, data) => {
+    const updateNote = {
+      ...note,
+      top: data.y,
+      left: data.x,
+    };
+
+    setNote(updateNote);
+  };
+
+  useEffect(() => {
+    handleUpdateNotes();
+  }, [note]);
 
   return (
-    <DraggableComponent>
+    <DraggableComponent
+      position={{
+        x: left,
+        y: top,
+      }}
+      onStop={handleDragStop}
+    >
       <StyledCard coords={{ left, top, width, height }}>
         <StyledHeader background={color}>
           <StyledHeaderActions size="small">
