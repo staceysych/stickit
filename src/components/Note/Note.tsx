@@ -1,6 +1,5 @@
 import React from "react";
 import { useDebounce } from "use-debounce";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import PushPinIcon from "@mui/icons-material/PushPin";
 import "./note.css";
 
@@ -98,7 +97,11 @@ const Note = (props: NotePropsType) => {
             <PushPinIcon fontSize="small" />
           </StyledHeaderActions>
           <StyledHeaderText>New Note</StyledHeaderText>
-          <NoteActions anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
+          <NoteActions
+            anchorEl={anchorEl}
+            setAnchorEl={setAnchorEl}
+            noteId={note._id}
+          />
         </StyledHeader>
         <StyledBody>
           <StyledTextField

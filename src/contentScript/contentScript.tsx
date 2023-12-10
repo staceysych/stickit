@@ -2,17 +2,16 @@ import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import "./contentScript.css";
 
-import { Messages } from "../utils/messages";
+import { Messages, IMessageData } from "../utils/messages";
 import { NoteType } from "../types/noteType";
-import { addNoteToStorage, fetchNotes } from "../utils/storage";
+import {
+  addNoteToStorage,
+  fetchNotes,
+  removeNoteFromStorage,
+} from "../utils/storage";
 import "./contentScript.css";
 
 import Note from "../components/Note";
-
-interface IMessageData {
-  url: string;
-  currentNote: NoteType;
-}
 
 interface IMessage {
   type: Messages;
@@ -42,6 +41,15 @@ const App = () => {
       case Messages.DELETE_ALL: {
         chrome.storage.sync.remove(currentPageUrl);
         setNotes([]);
+
+        break;
+      }
+      case Messages.DELETE_NOTE: {
+        const updateNotes = await removeNoteFromStorage(
+          data.noteId,
+          currentPageUrl
+        );
+        setNotes(updateNotes);
 
         break;
       }
