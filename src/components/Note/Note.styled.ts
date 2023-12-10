@@ -1,34 +1,42 @@
 import { Card, Box, Typography, IconButton, TextField } from "@mui/material";
+import { Rnd } from "react-rnd";
 import styled from "styled-components";
-import {colorPalette} from '../../utils/colors'
+import { colorPalette } from "../../utils/colors";
+import reset from "react-style-reset";
 
 interface StyledHeaderProps {
   background: string;
 }
 
-interface StyledCardProps {
-  coords: {
-    left: number;
-    top: number;
-    width: number;
-    height: number;
-  };
-}
+export const StyledRnd = styled(Rnd)`
+  position: "fixed";
+  padding: 0;
+  margin: 0;
+  z-index: 9999;
+`;
 
-export const StyledCard = styled(Card)<StyledCardProps>`
+export const StyledCard = styled(Card)`
+  ${reset};
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
   flex-direction: column;
   padding: 0;
   margin: 0;
-  width: ${(props) => props.coords.width }px;
-  height: ${(props) => props.coords.height }px;
+  width: 100%;
+  height: 100%;
   border-radius: 8px !important;
   position: fixed;
-  z-index: 9999;
-  top: ${(props) => props.coords.top }px;
-  left: ${(props) => props.coords.left }px;
+
+  * {
+    box-sizing: border-box;
+    background: none;
+    border: none;
+    width: auto;
+    height: auto;
+    box-shadow: none;
+    border-radius: 0;
+  }
 `;
 
 export const StyledHeader = styled(Box)<StyledHeaderProps>`
@@ -37,11 +45,11 @@ export const StyledHeader = styled(Box)<StyledHeaderProps>`
   justify-content: space-between;
   background-color: ${(props) => colorPalette[props.background].main};
   width: 100%;
-  padding: 0;
-  margin: 0;
   height: 50px;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+  padding: 0 4px;
+  cursor: pointer;
 `;
 export const StyledHeaderText = styled(Typography)``;
 export const StyledHeaderActions = styled(IconButton)`
@@ -65,9 +73,8 @@ export const StyledTextField = styled(TextField)<StyledHeaderProps>`
   > div {
     height: 100%;
     width: 100%;
-    margin: 0;
-    border-radius: 0;
     background-color: ${(props) => colorPalette[props.background].light};
+    padding: 8px;
   }
 
   fieldset {

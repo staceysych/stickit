@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
+import "./contentScript.css";
 
 import { Messages } from "../utils/messages";
 import { NoteType } from "../types/noteType";
@@ -8,12 +9,22 @@ import "./contentScript.css";
 
 import Note from "../components/Note";
 
-const App: React.FC<{}> = () => {
+interface IMessageData {
+  url: string;
+  currentNote: NoteType;
+}
+
+interface IMessage {
+  type: Messages;
+  data: IMessageData;
+}
+
+const App = () => {
   const [notes, setNotes] = useState<NoteType[]>([]);
   const [currentPageUrl, setCurrentPageUrl] = useState<string>("");
 
-  const handleMessages = async ({ type, data }) => {
-    switch(type) {
+  const handleMessages = async ({ type, data }: IMessage) => {
+    switch (type) {
       case Messages.NEW_NOTE: {
         const newNote = await addNoteToStorage(currentPageUrl);
         setNotes((prevNotes) => [...prevNotes, newNote]);
@@ -23,7 +34,7 @@ const App: React.FC<{}> = () => {
       case Messages.NEW_PAGE: {
         setCurrentPageUrl(data.url);
         const notes = await fetchNotes(data.url);
-  
+
         setNotes(notes);
 
         break;
@@ -34,7 +45,8 @@ const App: React.FC<{}> = () => {
 
         break;
       }
-      default: {}
+      default: {
+      }
     }
   };
 
@@ -48,13 +60,14 @@ const App: React.FC<{}> = () => {
   return (
     <>
       {notes.map((note) => (
-        <Note key={note._id} note={note} />
+        <Note key={note._id} note={note} currentPageUrl={currentPageUrl} />
       ))}
     </>
   );
 };
 
 const root = document.createElement("div");
+root.classList.add("notes-container");
 
 document.body.appendChild(root);
 ReactDOM.render(<App />, root);

@@ -11,7 +11,7 @@ const Menu: React.FC<{}> = () => {
       currentWindow: true,
     });
 
-    if (tabs.length > 0) {
+    if (tabs.length > 0 && tabs[0].id) {
       chrome.tabs.sendMessage(tabs[0].id, { type: Messages.NEW_NOTE });
     }
   };
@@ -22,7 +22,7 @@ const Menu: React.FC<{}> = () => {
       currentWindow: true,
     });
 
-    if (tabs.length > 0) {
+    if (tabs.length > 0 && tabs[0].id) {
       chrome.tabs.sendMessage(tabs[0].id, { type: Messages.DELETE_ALL });
     }
   };
