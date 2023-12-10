@@ -24,7 +24,7 @@ export const addNoteToStorage = async (
     height: 200,
     top: 1,
     left: 1,
-    content: "Make a note",
+    content: "",
     color,
     createdOn: new Date(),
   };
@@ -42,11 +42,14 @@ export const addNoteToStorage = async (
 };
 
 export const updateNotesInStorage = async (
-  notes: NoteType[],
+  note: NoteType,
   currentPageUrl: string
 ) => {
+  const currentNoteList = await fetchNotes(currentPageUrl);
+  const updatedNoteList = currentNoteList.map((item) =>
+    item._id === note._id ? note : item
+  );
   await chrome.storage.sync.set({
-    [currentPageUrl]: JSON.stringify(notes),
+    [currentPageUrl]: JSON.stringify(updatedNoteList),
   });
 };
-

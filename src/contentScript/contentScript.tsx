@@ -4,10 +4,7 @@ import "./contentScript.css";
 
 import { Messages } from "../utils/messages";
 import { NoteType } from "../types/noteType";
-import {
-  addNoteToStorage,
-  fetchNotes,
-} from "../utils/storage";
+import { addNoteToStorage, fetchNotes } from "../utils/storage";
 import "./contentScript.css";
 
 import Note from "../components/Note";
@@ -37,7 +34,6 @@ const App = () => {
       case Messages.NEW_PAGE: {
         setCurrentPageUrl(data.url);
         const notes = await fetchNotes(data.url);
-        console.log(notes);
 
         setNotes(notes);
 
@@ -49,7 +45,8 @@ const App = () => {
 
         break;
       }
-      default: {}
+      default: {
+      }
     }
   };
 
@@ -63,7 +60,7 @@ const App = () => {
   return (
     <>
       {notes.map((note) => (
-        <Note key={note._id} note={note} setNotes={setNotes} currentPageUrl={currentPageUrl} />
+        <Note key={note._id} note={note} currentPageUrl={currentPageUrl} />
       ))}
     </>
   );

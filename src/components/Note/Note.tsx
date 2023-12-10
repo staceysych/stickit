@@ -7,42 +7,36 @@ import "./note.css";
 import { updateNotesInStorage } from "../../utils/storage";
 
 import { NoteType } from "../../types/noteType";
+import NoteActions from "../NoteActions/NoteActions";
 
 import {
   StyledRnd,
   StyledCard,
   StyledHeader,
   StyledHeaderText,
-  StyledHeaderActions,
   StyledBody,
   StyledTextField,
+  StyledHeaderActions,
 } from "./Note.styled";
-import { Dispatch, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 interface NotePropsType {
   note: NoteType;
-  setNotes: Dispatch<React.SetStateAction<NoteType[]>>;
   currentPageUrl;
 }
 
 const Note = (props: NotePropsType) => {
-  const { setNotes } = props;
-  const [note, setNote] = useState<NoteType>(props.note);
+  const { currentPageUrl, note: currentNote } = props;
+  const [note, setNote] = useState<NoteType>(currentNote);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
   const { width, height, top, left, content, color } = note;
 
   const [text, setText] = useState<string>(content);
   const [debouncedText] = useDebounce(text, 400);
 
   const handleUpdateNotes = async () => {
-    setNotes((prevNotes) => {
-      const updatedNotes = prevNotes.map((item) =>
-        item._id === note._id ? note : item
-      );
-
-      updateNotesInStorage(updatedNotes, props.currentPageUrl);
-
-      return updatedNotes;
-    });
+    updateNotesInStorage(note, currentPageUrl);
   };
 
   const onResizeStop = (_e, _, ref) => {
@@ -104,9 +98,7 @@ const Note = (props: NotePropsType) => {
             <PushPinIcon fontSize="small" />
           </StyledHeaderActions>
           <StyledHeaderText>New Note</StyledHeaderText>
-          <StyledHeaderActions size="small">
-            <MoreVertIcon fontSize="small" />
-          </StyledHeaderActions>
+          <NoteActions anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
         </StyledHeader>
         <StyledBody>
           <StyledTextField

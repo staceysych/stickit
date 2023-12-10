@@ -1,8 +1,8 @@
 import { Card, Box, Typography, IconButton, TextField } from "@mui/material";
-import {Rnd} from 'react-rnd'
+import { Rnd } from "react-rnd";
 import styled from "styled-components";
 import { colorPalette } from "../../utils/colors";
-
+import reset from "react-style-reset";
 
 interface StyledHeaderProps {
   background: string;
@@ -16,6 +16,7 @@ export const StyledRnd = styled(Rnd)`
 `;
 
 export const StyledCard = styled(Card)`
+  ${reset};
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
@@ -29,6 +30,12 @@ export const StyledCard = styled(Card)`
 
   * {
     box-sizing: border-box;
+    background: none;
+    border: none;
+    width: auto;
+    height: auto;
+    box-shadow: none;
+    border-radius: 0;
   }
 `;
 
@@ -38,7 +45,6 @@ export const StyledHeader = styled(Box)<StyledHeaderProps>`
   justify-content: space-between;
   background-color: ${(props) => colorPalette[props.background].main};
   width: 100%;
-  margin: 0;
   height: 50px;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
@@ -67,9 +73,8 @@ export const StyledTextField = styled(TextField)<StyledHeaderProps>`
   > div {
     height: 100%;
     width: 100%;
-    margin: 0;
-    border-radius: 0;
     background-color: ${(props) => colorPalette[props.background].light};
+    padding: 8px;
   }
 
   fieldset {
