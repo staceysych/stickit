@@ -53,3 +53,17 @@ export const updateNotesInStorage = async (
     [currentPageUrl]: JSON.stringify(updatedNoteList),
   });
 };
+
+export const removeNoteFromStorage = async (
+  noteId: string,
+  currentPageUrl: string
+) => {
+  const currentNoteList = await fetchNotes(currentPageUrl);
+  const updatedNoteList = currentNoteList.filter((item) => item._id !== noteId);
+
+  await chrome.storage.sync.set({
+    [currentPageUrl]: JSON.stringify(updatedNoteList),
+  });
+
+  return updatedNoteList;
+};
