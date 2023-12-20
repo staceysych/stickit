@@ -7,3 +7,14 @@
   background: none;
   box-shadow: none;
 }
+
+.bounds-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 99.25%;
+  height: 99.25%;
+  visibility: hidden ;
+  margin: 0;
+  padding: 0;
+}

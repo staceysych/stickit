@@ -8,25 +8,39 @@ interface StyledHeaderProps {
   background: string;
 }
 
-export const StyledRnd = styled(Rnd)`
-  position: "fixed";
+interface StyledRndProps {
+  isPinned: boolean;
+}
+
+interface StyledCardProps {
+  background: string
+}
+
+interface StyledBodyProps {
+  isMinimized: boolean
+}
+
+export const StyledRnd = styled(Rnd)<StyledRndProps>`
+  position: ${(props) => props.isPinned ? 'fixed' : 'absolute'} !important;
   padding: 0;
   margin: 0;
   z-index: 9999;
+  transition: transform .3s ease-in-out, height .3s ease-in-out;
 `;
-
-export const StyledCard = styled(Card)`
+  
+export const StyledCard = styled(Card)<StyledCardProps>`
   ${reset};
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
   flex-direction: column;
+  background-color: ${(props) => colorPalette[props.background].light} !important;
   padding: 0;
   margin: 0;
   width: 100%;
   height: 100%;
   border-radius: 8px !important;
-  position: fixed;
+  transition: transform .3s ease-in-out, height .3s ease-in-out;
 
   * {
     box-sizing: border-box;
@@ -37,6 +51,7 @@ export const StyledCard = styled(Card)`
     box-shadow: none;
     border-radius: 0;
   }
+
 `;
 
 export const StyledHeader = styled(Box)<StyledHeaderProps>`
@@ -58,22 +73,22 @@ export const StyledHeaderActions = styled(IconButton)`
   }
 `;
 
-export const StyledBody = styled(Box)`
+export const StyledBody = styled(Box)<StyledBodyProps>`
   width: 100%;
-  height: 100%;
+  height: ${(props) => props.isMinimized ? "0px" : '100%'};
   border-radius: 0;
   padding: 0;
   margin: 0;
 `;
 
-export const StyledTextField = styled(TextField)<StyledHeaderProps>`
+export const StyledTextField = styled(TextField)`
   width: 100%;
   height: 100%;
 
   > div {
     height: 100%;
     width: 100%;
-    background-color: ${(props) => colorPalette[props.background].light};
+    background-color: transparent;
     padding: 8px;
   }
 

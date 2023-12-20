@@ -4,19 +4,21 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { StyledIconButton, StyledMenu } from "./NoteActions.styled";
 import useStyles from "./NoteActions.styles";
 import { getActions } from "./utils";
+import { NoteType } from "../../types/noteType";
 
 interface INoteAction {
   title: string;
-  onClick?: () => void;
+  onClick?: (setNote: React.Dispatch<React.SetStateAction<NoteType>>) => void;
 }
 
 interface NoteActionsProps {
   anchorEl: HTMLElement;
   setAnchorEl: React.Dispatch<React.SetStateAction<HTMLElement>>;
   noteId: string;
+  setNote: React.Dispatch<React.SetStateAction<NoteType>>
 }
 
-const NoteActions = ({ anchorEl, setAnchorEl, noteId }: NoteActionsProps) => {
+const NoteActions = ({ anchorEl, setAnchorEl, noteId, setNote }: NoteActionsProps) => {
   const actions = getActions(noteId);
 
   const classes = useStyles();
@@ -28,7 +30,7 @@ const NoteActions = ({ anchorEl, setAnchorEl, noteId }: NoteActionsProps) => {
   };
 
   const handleActionClick = (action: INoteAction) => {
-    action.onClick && action.onClick();
+    action.onClick && action.onClick(setNote);
     handleNoteActionsClose();
   };
 

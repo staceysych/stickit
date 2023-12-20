@@ -14,6 +14,7 @@ const useStyles = makeStyles(() => ({
   },
 
   list: {
+    background: '#ffffff',
     "& li": {
       padding: "8px",
     },

@@ -1,7 +1,7 @@
 import { StyledList, StyledListItem } from "./Menu.styled";
 import React from "react";
 import StickyNote2Icon from "@mui/icons-material/StickyNote2";
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { Messages } from "../../utils/messages";
 
 const Menu: React.FC<{}> = () => {
@@ -12,7 +12,12 @@ const Menu: React.FC<{}> = () => {
     });
 
     if (tabs.length > 0 && tabs[0].id) {
-      chrome.tabs.sendMessage(tabs[0].id, { type: Messages.NEW_NOTE });
+      chrome.tabs.sendMessage(tabs[0].id, {
+        type: Messages.NEW_NOTE,
+        data: {
+          content: "",
+        },
+      });
     }
   };
 

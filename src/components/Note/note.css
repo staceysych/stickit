@@ -10,3 +10,12 @@
     background-color: transparent;
     box-shadow: none;
 }
+
+.react-draggable-dragging {
+    opacity: 50%;
+    transition: none !important;
+}
+
+.resizing {
+    transition:  none !important;
+}
