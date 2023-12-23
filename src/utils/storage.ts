@@ -13,7 +13,8 @@ export const fetchNotes = async (url: string): Promise<any[]> => {
 };
 
 export const addNoteToStorage = async (
-  currentPageUrl: string
+  currentPageUrl: string,
+  content: string
 ): Promise<NoteType> => {
   const _id: string = uniqid();
   const color = generateRandomColor();
@@ -22,11 +23,17 @@ export const addNoteToStorage = async (
     _id,
     width: 200,
     height: 200,
-    top: 1,
-    left: 1,
-    content: "",
+    top: window.scrollY + 20,
+    left: 20,
+    content,
     color,
     createdOn: new Date(),
+    isPinned: false,
+    minimize: {
+      enabled: false,
+      left: 0,
+      height: 40
+    }
   };
 
   const currentNoteList = await fetchNotes(currentPageUrl);

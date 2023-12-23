@@ -1,5 +1,31 @@
 import { Messages } from "../utils/messages";
 
+chrome.runtime.onInstalled.addListener(async () => {
+    chrome.contextMenus.create({
+      id: 'create-note',
+      title: "Create note from selection",
+      type: 'normal',
+      contexts: ['selection']
+    });
+});
+
+chrome.contextMenus.onClicked.addListener(async (item, tab) => {
+  const { selectionText } = item;
+
+  if (tab.id) {
+    await chrome.tabs.sendMessage(
+      tab.id,
+      {
+        type: Messages.NEW_NOTE,
+        data: {
+          content: selectionText,
+        },
+      },
+      () => chrome.runtime.lastError
+    );
+  }
+});
+
 interface IMessage {
   type: Messages;
   data: any;

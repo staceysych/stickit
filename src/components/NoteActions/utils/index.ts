@@ -1,5 +1,18 @@
 import { Messages, sendMessageToBackground } from "../../../utils/messages";
 
+const handleMinimizeNote = (setNote) => {
+  setNote((prev) => {
+    return {
+      ...prev,
+      minimize: {
+        enabled: true,
+        left: -prev.width + 50,
+        height: 40,
+      }
+    };
+  });
+};
+
 export const getActions = (noteId: string) => [
   {
     title: "Delete",
@@ -7,5 +20,6 @@ export const getActions = (noteId: string) => [
   },
   {
     title: "Minimize",
+    onClick: (setNote) => handleMinimizeNote(setNote),
   },
 ];

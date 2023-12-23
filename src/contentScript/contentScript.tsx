@@ -25,7 +25,9 @@ const App = () => {
   const handleMessages = async ({ type, data }: IMessage) => {
     switch (type) {
       case Messages.NEW_NOTE: {
-        const newNote = await addNoteToStorage(currentPageUrl);
+        const content = data.content || ''
+
+        const newNote = await addNoteToStorage(currentPageUrl, content);
         setNotes((prevNotes) => [...prevNotes, newNote]);
 
         break;
@@ -67,6 +69,7 @@ const App = () => {
 
   return (
     <>
+
       {notes.map((note) => (
         <Note key={note._id} note={note} currentPageUrl={currentPageUrl} />
       ))}
@@ -77,5 +80,9 @@ const App = () => {
 const root = document.createElement("div");
 root.classList.add("notes-container");
 
+const boundsElement = document.createElement("div");
+boundsElement.classList.add("bounds-container");
+
 document.body.appendChild(root);
+document.body.appendChild(boundsElement);
 ReactDOM.render(<App />, root);

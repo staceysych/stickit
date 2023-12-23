@@ -28,35 +28,51 @@ const Note = (props: NotePropsType) => {
   const { currentPageUrl, note: currentNote } = props;
   const [note, setNote] = useState<NoteType>(currentNote);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [isResizing, setIsResizing] = useState(false);
 
-  const { width, height, top, left, content, color } = note;
+  const {
+    width,
+    height,
+    top,
+    left,
+    content,
+    color,
+    isPinned,
+    minimize: {
+      enabled: isMinimized,
+      left: minimizedLeft,
+      height: minimizedHeight,
+    },
+  } = note;
 
   const [text, setText] = useState<string>(content);
   const [debouncedText] = useDebounce(text, 400);
 
   const handleUpdateNotes = async () => {
+    console.log(note);
     updateNotesInStorage(note, currentPageUrl);
   };
 
-  const onResizeStop = (_e, _, ref) => {
-    const { top, left } = ref.getBoundingClientRect();
+  const onResizeStop = (_e, _direction, ref, _delta, position) => {
+    const { x: resizeLeft, y: resizeTop } = position;
 
     const updateNote = {
       ...note,
       width: ref.offsetWidth,
       height: ref.offsetHeight,
-      left: left,
-      top: top,
+      top: resizeTop,
+      left: resizeLeft,
     };
 
+    setIsResizing(false);
     setNote(updateNote);
   };
 
-  const handleDragStop = (_e, data) => {
+  const handleDragStop = (e, data) => {
     const updateNote = {
       ...note,
       top: data.y,
-      left: data.x,
+      left: isMinimized ? left : data.x,
     };
 
     setNote(updateNote);
@@ -75,6 +91,36 @@ const Note = (props: NotePropsType) => {
     setNote(updateNote);
   };
 
+  const handlePinNote = (e) => {
+    const { top } = e.target.parentNode.parentNode.getBoundingClientRect();
+    const { scrollY } = window;
+
+    const changedPinValue = !isPinned;
+
+    setNote((prev) => {
+      return {
+        ...prev,
+        top: changedPinValue === true ? top : top + scrollY,
+        isPinned: changedPinValue,
+      };
+    });
+  };
+
+  const handleMinimizeClick = () => {
+    if (isMinimized) {
+      setNote((prev) => {
+        return {
+          ...prev,
+          minimize: {
+            left: 0,
+            height: 40,
+            enabled: false,
+          },
+        };
+      });
+    }
+  };
+
   useEffect(() => {
     handleDebounceChange();
   }, [debouncedText]);
@@ -85,29 +131,49 @@ const Note = (props: NotePropsType) => {
 
   return (
     <StyledRnd
-      default={{ width: width, height: height, x: left, y: top }}
+      size={{ width: width, height: isMinimized ? minimizedHeight : height }}
+      position={{ x: isMinimized ? minimizedLeft : left, y: top }}
+      minWidth={isMinimized ? 0 : "150px"}
+      minHeight={isMinimized ? 0 : "150px"}
       onDragStop={handleDragStop}
+      onClick={handleMinimizeClick}
       onResizeStop={onResizeStop}
+      onResizeStart={() => setIsResizing(true)}
+      dragAxis={isMinimized ? "none" : "both"}
       dragHandleClassName="handle"
+      bounds=".bounds-container"
       resizeHandleWrapperClass={"resizeHandleWrapperClass"}
+      className={isResizing ? "resizing" : ""}
+      isPinned={isPinned}
+      enableResizing={
+        !isMinimized && {
+          top: true,
+          topRight: true,
+          right: true,
+          bottomRight: true,
+          bottom: true,
+        }
+      }
     >
-      <StyledCard>
+      <StyledCard background={color}>
         <StyledHeader background={color} className="handle">
-          <StyledHeaderActions size="small">
+          <StyledHeaderActions size="small" onClick={handlePinNote}>
             <PushPinIcon fontSize="small" />
           </StyledHeaderActions>
-          <StyledHeaderText>New Note</StyledHeaderText>
-          <NoteActions
-            anchorEl={anchorEl}
-            setAnchorEl={setAnchorEl}
-            noteId={note._id}
-          />
+          {!isMinimized && (
+            <NoteActions
+              anchorEl={anchorEl}
+              setAnchorEl={setAnchorEl}
+              noteId={note._id}
+              setNote={setNote}
+            />
+          )}
         </StyledHeader>
-        <StyledBody>
+
+        <StyledBody isMinimized={isMinimized}>
           <StyledTextField
             placeholder="Take a note..."
             multiline
-            background={color}
             value={text}
             onChange={onInputChange}
           />
