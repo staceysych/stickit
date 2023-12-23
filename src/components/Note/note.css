@@ -1,21 +1,21 @@
 .resizeHandleWrapperClass {
-    padding: 0;
-    margin: 0;
-    width: 100%;
+  padding: 0;
+  margin: 0;
+  width: 100%;
 }
 
 .resizeHandleWrapperClass div {
-    padding: 1px;
-    margin: 0;
-    background-color: transparent;
-    box-shadow: none;
+  padding: 1px;
+  margin: 0;
+  background-color: transparent;
+  box-shadow: none;
 }
 
 .react-draggable-dragging {
-    opacity: 50%;
-    transition: none !important;
+  opacity: 50%;
+  transition: none !important;
 }
 
 .resizing {
-    transition:  none !important;
+  transition: none !important;
 }

@@ -1,4 +1,4 @@
-import { IconButton, Menu } from "@mui/material";
+import { IconButton, Menu, MenuItem } from "@mui/material";
 import styled from "styled-components";
 import reset from "react-style-reset/string";
 
@@ -17,4 +17,11 @@ export const StyledMenu = styled(Menu)`
   width: auto;
   height: auto;
   box-shadow: none;
+`;
+export const StyledMenuItem = styled(MenuItem)`
+  ${reset};
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 4px;
 `;

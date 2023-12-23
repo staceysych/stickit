@@ -1,12 +1,14 @@
 import React from "react";
 import { useDebounce } from "use-debounce";
-import PushPinIcon from "@mui/icons-material/PushPin";
+import { PushPinOutlined, PushPin } from "@mui/icons-material";
 import "./note.css";
 
 import { updateNotesInStorage } from "../../utils/storage";
+import { FULL_SIZE } from "../../utils/defaults";
 
 import { NoteType } from "../../types/noteType";
 import NoteActions from "../NoteActions/NoteActions";
+import { isEqual } from "lodash-es";
 
 import {
   StyledRnd,
@@ -30,6 +32,8 @@ const Note = (props: NotePropsType) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [isResizing, setIsResizing] = useState(false);
 
+  console.log("update");
+
   const {
     width,
     height,
@@ -49,11 +53,17 @@ const Note = (props: NotePropsType) => {
   const [debouncedText] = useDebounce(text, 400);
 
   const handleUpdateNotes = async () => {
-    console.log(note);
+    console.log({ note });
     updateNotesInStorage(note, currentPageUrl);
   };
 
+  const onResizeStart = () => {
+    console.log("resize start");
+    setIsResizing(true);
+  };
+
   const onResizeStop = (_e, _direction, ref, _delta, position) => {
+    console.log("resize");
     const { x: resizeLeft, y: resizeTop } = position;
 
     const updateNote = {
@@ -64,18 +74,24 @@ const Note = (props: NotePropsType) => {
       left: resizeLeft,
     };
 
+    const hasNoteChanged = !isEqual(note, updateNote);
+
     setIsResizing(false);
-    setNote(updateNote);
+    hasNoteChanged && setNote(updateNote);
   };
 
   const handleDragStop = (e, data) => {
+    e.stopPropagation();
     const updateNote = {
       ...note,
       top: data.y,
       left: isMinimized ? left : data.x,
     };
 
-    setNote(updateNote);
+    const hasNoteChanged = !isEqual(note, updateNote);
+    console.log({ hasNoteChanged });
+
+    hasNoteChanged && setNote(updateNote);
   };
 
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,16 +113,19 @@ const Note = (props: NotePropsType) => {
 
     const changedPinValue = !isPinned;
 
+    console.log("here", isPinned, top, scrollY);
+
     setNote((prev) => {
       return {
         ...prev,
-        top: changedPinValue === true ? top : top + scrollY,
+        top: changedPinValue ? top : top + scrollY,
         isPinned: changedPinValue,
       };
     });
   };
 
   const handleMinimizeClick = () => {
+    console.log("here", isMinimized);
     if (isMinimized) {
       setNote((prev) => {
         return {
@@ -133,12 +152,12 @@ const Note = (props: NotePropsType) => {
     <StyledRnd
       size={{ width: width, height: isMinimized ? minimizedHeight : height }}
       position={{ x: isMinimized ? minimizedLeft : left, y: top }}
-      minWidth={isMinimized ? 0 : "150px"}
-      minHeight={isMinimized ? 0 : "150px"}
+      minWidth={isMinimized ? 0 : FULL_SIZE}
+      minHeight={isMinimized ? 0 : FULL_SIZE}
       onDragStop={handleDragStop}
-      onClick={handleMinimizeClick}
       onResizeStop={onResizeStop}
-      onResizeStart={() => setIsResizing(true)}
+      onResizeStart={onResizeStart}
+      onClick={handleMinimizeClick}
       dragAxis={isMinimized ? "none" : "both"}
       dragHandleClassName="handle"
       bounds=".bounds-container"
@@ -155,10 +174,14 @@ const Note = (props: NotePropsType) => {
         }
       }
     >
-      <StyledCard background={color}>
+      <StyledCard>
         <StyledHeader background={color} className="handle">
           <StyledHeaderActions size="small" onClick={handlePinNote}>
-            <PushPinIcon fontSize="small" />
+            {isPinned ? (
+              <PushPin fontSize="small" />
+            ) : (
+              <PushPinOutlined fontSize="small" />
+            )}
           </StyledHeaderActions>
           {!isMinimized && (
             <NoteActions
@@ -170,7 +193,7 @@ const Note = (props: NotePropsType) => {
           )}
         </StyledHeader>
 
-        <StyledBody isMinimized={isMinimized}>
+        <StyledBody isMinimized={isMinimized} background={color}>
           <StyledTextField
             placeholder="Take a note..."
             multiline
