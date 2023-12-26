@@ -1,12 +1,13 @@
 import { Messages } from "../utils/messages";
+import { fetchNotes } from "../utils/storage";
 
 chrome.runtime.onInstalled.addListener(async () => {
-    chrome.contextMenus.create({
-      id: 'create-note',
-      title: "Create note from selection",
-      type: 'normal',
-      contexts: ['selection']
-    });
+  chrome.contextMenus.create({
+    id: "create-note",
+    title: "Create note from selection",
+    type: "normal",
+    contexts: ["selection"],
+  });
 });
 
 chrome.contextMenus.onClicked.addListener(async (item, tab) => {
@@ -55,9 +56,24 @@ chrome.tabs.onUpdated.addListener(async (tabId, _, tab) => {
       },
       () => chrome.runtime.lastError
     );
+
+    const notes = await fetchNotes(tab.url);
+
+    chrome.action.setBadgeText({
+      text: notes.length.toString(),
+    });
   }
 });
 
 chrome.runtime.onMessage.addListener((message) => {
   sendMessagesToContentScript(message);
+});
+
+chrome.storage.onChanged.addListener(async (changes) => {
+  const url = Object.keys(changes)[0];
+  const notes = await fetchNotes(url);
+
+  await chrome.action.setBadgeText({
+    text: notes.length.toString(),
+  });
 });

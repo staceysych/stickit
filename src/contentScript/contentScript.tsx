@@ -25,7 +25,7 @@ const App = () => {
   const handleMessages = async ({ type, data }: IMessage) => {
     switch (type) {
       case Messages.NEW_NOTE: {
-        const content = data.content || ''
+        const content = data.content || "";
 
         const newNote = await addNoteToStorage(currentPageUrl, content);
         setNotes((prevNotes) => [...prevNotes, newNote]);
@@ -41,8 +41,14 @@ const App = () => {
         break;
       }
       case Messages.DELETE_ALL: {
-        chrome.storage.sync.remove(currentPageUrl);
-        setNotes([]);
+        const result = window.confirm(
+          "Are you sure you want to delete all notes from this page?"
+        );
+
+        if (result) {
+          chrome.storage.sync.remove(currentPageUrl);
+          setNotes([]);
+        }
 
         break;
       }
@@ -69,7 +75,6 @@ const App = () => {
 
   return (
     <>
-
       {notes.map((note) => (
         <Note key={note._id} note={note} currentPageUrl={currentPageUrl} />
       ))}

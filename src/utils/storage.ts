@@ -32,8 +32,8 @@ export const addNoteToStorage = async (
     minimize: {
       enabled: false,
       left: 0,
-      height: 40
-    }
+      height: 40,
+    },
   };
 
   const currentNoteList = await fetchNotes(currentPageUrl);

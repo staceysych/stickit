@@ -1,7 +1,10 @@
-import { Menu, MenuItem } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
-import { StyledIconButton, StyledMenu } from "./NoteActions.styled";
+import {
+  StyledIconButton,
+  StyledMenu,
+  StyledMenuItem,
+} from "./NoteActions.styled";
 import useStyles from "./NoteActions.styles";
 import { getActions } from "./utils";
 import { NoteType } from "../../types/noteType";
@@ -15,10 +18,15 @@ interface NoteActionsProps {
   anchorEl: HTMLElement;
   setAnchorEl: React.Dispatch<React.SetStateAction<HTMLElement>>;
   noteId: string;
-  setNote: React.Dispatch<React.SetStateAction<NoteType>>
+  setNote: React.Dispatch<React.SetStateAction<NoteType>>;
 }
 
-const NoteActions = ({ anchorEl, setAnchorEl, noteId, setNote }: NoteActionsProps) => {
+const NoteActions = ({
+  anchorEl,
+  setAnchorEl,
+  noteId,
+  setNote,
+}: NoteActionsProps) => {
   const actions = getActions(noteId);
 
   const classes = useStyles();
@@ -52,12 +60,13 @@ const NoteActions = ({ anchorEl, setAnchorEl, noteId, setNote }: NoteActionsProp
         classes={classes}
       >
         {actions.map((action) => (
-          <MenuItem
+          <StyledMenuItem
             key={action.title}
             onClick={() => handleActionClick(action)}
           >
+            {action.icon}
             {action.title}
-          </MenuItem>
+          </StyledMenuItem>
         ))}
       </StyledMenu>
     </>
