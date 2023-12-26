@@ -32,8 +32,6 @@ const Note = (props: NotePropsType) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [isResizing, setIsResizing] = useState(false);
 
-  console.log("update");
-
   const {
     width,
     height,
@@ -53,17 +51,14 @@ const Note = (props: NotePropsType) => {
   const [debouncedText] = useDebounce(text, 400);
 
   const handleUpdateNotes = async () => {
-    console.log({ note });
     updateNotesInStorage(note, currentPageUrl);
   };
 
   const onResizeStart = () => {
-    console.log("resize start");
     setIsResizing(true);
   };
 
   const onResizeStop = (_e, _direction, ref, _delta, position) => {
-    console.log("resize");
     const { x: resizeLeft, y: resizeTop } = position;
 
     const updateNote = {
@@ -89,7 +84,6 @@ const Note = (props: NotePropsType) => {
     };
 
     const hasNoteChanged = !isEqual(note, updateNote);
-    console.log({ hasNoteChanged });
 
     hasNoteChanged && setNote(updateNote);
   };
@@ -113,8 +107,6 @@ const Note = (props: NotePropsType) => {
 
     const changedPinValue = !isPinned;
 
-    console.log("here", isPinned, top, scrollY);
-
     setNote((prev) => {
       return {
         ...prev,
@@ -125,7 +117,6 @@ const Note = (props: NotePropsType) => {
   };
 
   const handleMinimizeClick = () => {
-    console.log("here", isMinimized);
     if (isMinimized) {
       setNote((prev) => {
         return {

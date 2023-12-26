@@ -25,7 +25,7 @@ const App = () => {
   const handleMessages = async ({ type, data }: IMessage) => {
     switch (type) {
       case Messages.NEW_NOTE: {
-        const content = data.content || ''
+        const content = data.content || "";
 
         const newNote = await addNoteToStorage(currentPageUrl, content);
         setNotes((prevNotes) => [...prevNotes, newNote]);
@@ -69,7 +69,6 @@ const App = () => {
 
   return (
     <>
-
       {notes.map((note) => (
         <Note key={note._id} note={note} currentPageUrl={currentPageUrl} />
       ))}
