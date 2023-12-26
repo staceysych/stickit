@@ -22,4 +22,9 @@ export const StyledListItem = styled(ListItem)`
   &:hover {
     background-color: #f5f5f51a;
   }
+
+  "& svg": {
+    max-height: 20px;
+    max-width: 20px;
+  }
 `;
