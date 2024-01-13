@@ -61,14 +61,6 @@ const App = () => {
 
         break;
       }
-      case Messages.DELETE_NOTE_DASHBOARD: {
-        const notes = await fetchNotes(data.url);
-        console.log('HERE');
-
-        setNotes(notes);
-
-        break;
-      }
       default: {
       }
     }
