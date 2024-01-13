@@ -66,6 +66,7 @@ chrome.tabs.onUpdated.addListener(async (tabId, _, tab) => {
 });
 
 chrome.runtime.onMessage.addListener((message) => {
+  console.log(message);
   sendMessagesToContentScript(message);
 });
 

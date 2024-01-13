@@ -13,4 +13,5 @@ export type NoteType = {
     height: number,
     left: number
   }
+  url?: string
 };

@@ -12,7 +12,7 @@
     "default_title": "Weather Extension"
   },
   "permissions": ["storage", "tabs", "scripting", "contextMenus"],
-  "options_page": "options.html",
+  "options_page": "dashboard.html",
   "background": {
     "service_worker": "background.js"
   },

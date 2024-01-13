@@ -5,6 +5,7 @@ export enum Messages {
   NEW_PAGE,
   DELETE_ALL,
   DELETE_NOTE,
+  DELETE_NOTE_DASHBOARD,
 }
 
 export interface IMessageData {

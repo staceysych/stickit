@@ -5,7 +5,7 @@ const confirmDeletion = (noteId: string) => {
   const result = window.confirm("Are you sure you want to delete the note?");
 
   if (result) {
-    sendMessageToBackground(Messages.DELETE_NOTE, { noteId });
+    sendMessageToBackground(Messages.DELETE_NOTE_DASHBOARD, { noteId });
   }
 };
 
