@@ -1,6 +1,6 @@
 import { List, ListItem, Typography } from "@mui/material";
 import styled from "styled-components";
-import { colorPalette } from "../../utils/colors";
+import { colorPalette } from "../../../utils/colors";
 
 interface NoteColorBadge {
   background: string;

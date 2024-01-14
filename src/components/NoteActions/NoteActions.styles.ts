@@ -6,7 +6,7 @@ import { globalStyles } from "../../static/styles";
 const useStyles = makeStyles(() => ({
   root: {
     ...reset.div,
-    zIndex: "99999 !important",
+    zIndex: "9999999 !important",
 
     "& *": {
       ...globalStyles().root,

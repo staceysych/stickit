@@ -10,8 +10,8 @@ import React from "react";
 import SettingsIcon from "@mui/icons-material/Settings";
 import StickyNote2Icon from "@mui/icons-material/StickyNote2";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { Messages } from "../../utils/messages";
-import { NoteType } from "../../types/noteType";
+import { Messages } from "../../../utils/messages";
+import { NoteType } from "../../../types/noteType";
 
 interface DashboardSideBarPropsType {
   handleSelectUrl: (url: string) => void;

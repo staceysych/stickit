@@ -1,6 +1,6 @@
 import { List, ListItem, Typography } from "@mui/material";
 import styled from "styled-components";
-import { colorPalette } from "../../utils/colors";
+import { colorPalette } from "../../../utils/colors";
 
 interface NoteColorBadge {
   background: string;
@@ -15,8 +15,6 @@ export const Container = styled.div`
 `;
 
 export const Header = styled.div`
-  height: 50px;
-  background: black;
   width: 100%;
   margin-bottom: 20px;
 `;
@@ -64,4 +62,13 @@ export const NoteColorBadge = styled.div<NoteColorBadge>`
 export const NoteBody = styled.div`
   width: 95%;
   font-size: 16px;
+`
+
+export const NoteListGlobalNotification = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: large;
 `

@@ -1,5 +1,7 @@
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
 import {
   StyledIconButton,
   StyledMenu,
@@ -19,6 +21,7 @@ interface NoteActionsProps {
   setAnchorEl: React.Dispatch<React.SetStateAction<HTMLElement>>;
   noteId: string;
   setNote: React.Dispatch<React.SetStateAction<NoteType>>;
+  isMinimized: boolean;
 }
 
 const NoteActions = ({
@@ -26,6 +29,7 @@ const NoteActions = ({
   setAnchorEl,
   noteId,
   setNote,
+  isMinimized,
 }: NoteActionsProps) => {
   const actions = getActions(noteId);
 
@@ -45,12 +49,12 @@ const NoteActions = ({
   return (
     <>
       <StyledIconButton
-        size="small"
+        isMinimized={isMinimized}
         onClick={handleNoteActionClick}
         aria-label="more"
         id="action-button"
       >
-        <MoreVertIcon fontSize="small" />
+        <MoreVertIcon fontSize="inherit" />
       </StyledIconButton>
       <StyledMenu
         id="action-menu"

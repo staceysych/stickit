@@ -2,7 +2,14 @@ import { IconButton, Menu, MenuItem } from "@mui/material";
 import styled from "styled-components";
 import reset from "react-style-reset/string";
 
-export const StyledIconButton = styled(IconButton)`
+interface StyledIconButtonProps {
+  isMinimized: boolean;
+}
+
+export const StyledIconButton = styled(IconButton)<StyledIconButtonProps>`
+  visibility: ${(props) => (props.isMinimized ? "hidden" : "visible")};
+  font-size: 20px !important;
+
   > svg {
     color: #ffffff;
   }
@@ -18,6 +25,7 @@ export const StyledMenu = styled(Menu)`
   height: auto;
   box-shadow: none;
 `;
+
 export const StyledMenuItem = styled(MenuItem)`
   ${reset};
   display: flex;

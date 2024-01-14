@@ -1,4 +1,4 @@
-import { Messages, sendMessageToBackground } from "../../../utils/messages";
+import { Messages, sendMessageToBackground } from "../../../../utils/messages";
 import { DeleteForever, CloseFullscreen } from "@mui/icons-material";
 
 const confirmDeletion = (noteId: string, url: string) => {

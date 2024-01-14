@@ -6,24 +6,21 @@ import {
   ListContainer,
   NotesList,
   NoteListItemTitle,
-  NoteColorBadge,
   NotesListItem,
-  NoteBody,
+  NoteListGlobalNotification
 } from "./DashboardNotesList.styled";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DashboardNote from "../DashboardNote/DashboardNote";
-import { NoteType } from "../../types/noteType";
+import { NoteType } from "../../../types/noteType";
 
 interface DashboardNotes {
   notes: NoteType[];
-}
-
-interface NotesListItem {
-  note: NoteType;
+  selectedUrl: string;
 }
 
 const Menu: React.FC<DashboardNotes> = (props) => {
-  const { notes } = props;
+  const { notes, selectedUrl } = props;
+
+  console.log(selectedUrl);
 
   const groupedNotes = groupBy(notes, "url");
 
@@ -31,6 +28,8 @@ const Menu: React.FC<DashboardNotes> = (props) => {
     <Container>
       <Header>{/* SearchInput */}</Header>
       <ListContainer>
+        {(!groupedNotes && selectedUrl) && <NoteListGlobalNotification>There is no notes yet.</NoteListGlobalNotification> }
+        {!selectedUrl && <NoteListGlobalNotification>Please select url from sidebar.</NoteListGlobalNotification> }
         {Object.entries(groupedNotes).map(
           ([url, notes]: [string, NoteType[]]) => {
             return (

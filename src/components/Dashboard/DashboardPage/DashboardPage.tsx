@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import DashboardSideBar from "../DashboardSideBar";
 import DashboardNotesList from "../DashboardNotesList";
-import { Container } from "./Dashboard.styled";
-import { NoteType } from "../../types/noteType";
+import { Container } from "./DashboardPage.styled";
+import { NoteType } from "../../../types/noteType";
 import { uniq } from "lodash-es";
-import { Messages, IMessageData } from "../../utils/messages";
-import { removeNoteFromStorage } from "../../utils/storage";
+import { Messages, IMessageData } from "../../../utils/messages";
+import { removeNoteFromStorage } from "../../../utils/storage";
 
 interface IMessage {
   type: Messages;
@@ -39,6 +39,7 @@ const Menu: React.FC<{}> = () => {
         formattedNote[hostname] = formattedNote[hostname]
           ? [...formattedNote[hostname], ...parsedData]
           : parsedData;
+
         hostnames.push(hostname);
       });
 
@@ -76,7 +77,7 @@ const Menu: React.FC<{}> = () => {
   return (
     <Container>
       <DashboardSideBar urls={urls} handleSelectUrl={handleSelectUrl} />
-      <DashboardNotesList notes={notes[selectedUrl]} />
+      <DashboardNotesList notes={notes[selectedUrl]} selectedUrl={selectedUrl} />
     </Container>
   );
 };

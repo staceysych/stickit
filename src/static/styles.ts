@@ -10,5 +10,7 @@ export const globalStyles = () =>
       width: "auto",
       height: "auto",
       boxShadow: "none",
+      padding: 0,
+      margin: 0
     },
   });

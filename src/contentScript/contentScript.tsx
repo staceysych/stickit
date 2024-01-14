@@ -88,6 +88,11 @@ root.classList.add("notes-container");
 const boundsElement = document.createElement("div");
 boundsElement.classList.add("bounds-container");
 
+const {clientHeight} = document.body
+const {innerHeight} = window
+
+boundsElement.style.height = clientHeight > innerHeight ? document.body.clientHeight + "px" : window.innerHeight + 'px';
+
 document.body.appendChild(root);
 document.body.appendChild(boundsElement);
 ReactDOM.render(<App />, root);

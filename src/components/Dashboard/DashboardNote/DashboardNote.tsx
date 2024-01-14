@@ -2,9 +2,9 @@ import React, {useEffect, useState} from "react";
 import { omit } from "lodash-es";
 import { NoteColorBadge, NoteBody, ContentContainer } from "./DashboardNote.styled";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { NoteType } from "../../types/noteType";
+import { NoteType } from "../../../types/noteType";
 import DashboardActionMenu from "../DashboardActionMenu";
-import { updateNotesInStorage } from "../../utils/storage";
+import { updateNotesInStorage } from "../../../utils/storage";
 
 interface NotesListItem {
   note: NoteType;

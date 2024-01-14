@@ -6,7 +6,7 @@ import {
   StyledMenuItem,
 } from "./DashboardActionMenu.styled";
 import { getActions } from "./utils";
-import { NoteType } from "../../types/noteType";
+import { NoteType } from "../../../types/noteType";
 
 interface INoteAction {
   title: string;

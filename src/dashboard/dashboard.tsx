@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 import "fontsource-roboto";
 import "./dashboard.css";
 
-import Dashboard from "../components/Dashboard";
+import Dashboard from "../components/Dashboard/DashboardPage";
 
 const root = document.createElement("div");
 document.body.appendChild(root);

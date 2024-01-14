@@ -14,7 +14,6 @@ import {
   StyledRnd,
   StyledCard,
   StyledHeader,
-  StyledHeaderText,
   StyledBody,
   StyledTextField,
   StyledHeaderActions,
@@ -102,7 +101,8 @@ const Note = (props: NotePropsType) => {
   };
 
   const handlePinNote = (e) => {
-    const { top } = e.target.parentNode.parentNode.getBoundingClientRect();
+    const { top } =
+      e.target.parentNode.parentNode.parentNode.getBoundingClientRect();
     const { scrollY } = window;
 
     const changedPinValue = !isPinned;
@@ -110,7 +110,7 @@ const Note = (props: NotePropsType) => {
     setNote((prev) => {
       return {
         ...prev,
-        top: changedPinValue ? top : top + scrollY,
+        top: changedPinValue ? Number(top) : Number(top) + Number(scrollY),
         isPinned: changedPinValue,
       };
     });
@@ -136,64 +136,79 @@ const Note = (props: NotePropsType) => {
   }, [debouncedText]);
 
   useEffect(() => {
+    console.log(note._id, 'updated');
     handleUpdateNotes();
   }, [note]);
 
   return (
-    <StyledRnd
-      size={{ width: width, height: isMinimized ? minimizedHeight : height }}
-      position={{ x: isMinimized ? minimizedLeft : left, y: top }}
-      minWidth={isMinimized ? 0 : FULL_SIZE}
-      minHeight={isMinimized ? 0 : FULL_SIZE}
-      onDragStop={handleDragStop}
-      onResizeStop={onResizeStop}
-      onResizeStart={onResizeStart}
-      onClick={handleMinimizeClick}
-      dragAxis={isMinimized ? "none" : "both"}
-      dragHandleClassName="handle"
-      bounds=".bounds-container"
-      resizeHandleWrapperClass={"resizeHandleWrapperClass"}
-      className={isResizing ? "resizing" : ""}
-      isPinned={isPinned}
-      enableResizing={
-        !isMinimized && {
-          top: true,
-          topRight: true,
-          right: true,
-          bottomRight: true,
-          bottom: true,
-        }
-      }
+    <div
+      className="default"
+      style={{
+        margin: 0,
+        padding: 0,
+        width: 0,
+        height: 0,
+        top: 0,
+        left: 0,
+        background: 'transparent',
+        position: isPinned ? "fixed" : "absolute",
+        zIndex: 9999,
+      }}
     >
-      <StyledCard>
-        <StyledHeader background={color} className="handle">
-          <StyledHeaderActions size="small" onClick={handlePinNote}>
-            {isPinned ? (
-              <PushPin fontSize="small" />
-            ) : (
-              <PushPinOutlined fontSize="small" />
-            )}
-          </StyledHeaderActions>
-          {!isMinimized && (
+      <StyledRnd
+        size={{ width: width, height: isMinimized ? minimizedHeight : height }}
+        position={{ x: isMinimized ? minimizedLeft : left, y: top }}
+        minWidth={isMinimized ? 0 : FULL_SIZE}
+        minHeight={isMinimized ? 0 : FULL_SIZE}
+        onDragStop={handleDragStop}
+        onResizeStop={onResizeStop}
+        onResizeStart={onResizeStart}
+        onClick={handleMinimizeClick}
+        dragAxis={isMinimized ? "none" : "both"}
+        dragHandleClassName="handle"
+        bounds=".bounds-container"
+        resizeHandleWrapperClass={"resizeHandleWrapperClass"}
+        className={isResizing ? "resizing" : ""}
+        isPinned={isPinned}
+        enableResizing={
+          !isMinimized && {
+            top: true,
+            topRight: true,
+            right: true,
+            bottomRight: true,
+            bottom: true,
+          }
+        }
+      >
+        <StyledCard>
+          <StyledHeader background={color} className="handle">
+            <StyledHeaderActions onClick={handlePinNote}>
+              {isPinned ? (
+                <PushPin fontSize="inherit" />
+              ) : (
+                <PushPinOutlined fontSize="inherit" />
+              )}
+            </StyledHeaderActions>
             <NoteActions
+              isMinimized={isMinimized}
               anchorEl={anchorEl}
               setAnchorEl={setAnchorEl}
               noteId={note._id}
               setNote={setNote}
             />
-          )}
-        </StyledHeader>
+          </StyledHeader>
 
-        <StyledBody isMinimized={isMinimized} background={color}>
-          <StyledTextField
-            placeholder="Take a note..."
-            multiline
-            value={text}
-            onChange={onInputChange}
-          />
-        </StyledBody>
-      </StyledCard>
-    </StyledRnd>
+          <StyledBody isMinimized={isMinimized} background={color}>
+            <StyledTextField
+              placeholder="Take a note..."
+              multiline
+              value={text}
+              onChange={onInputChange}
+            />
+          </StyledBody>
+        </StyledCard>
+      </StyledRnd>
+    </div>
   );
 };
 
