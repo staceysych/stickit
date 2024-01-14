@@ -51,7 +51,6 @@ const Menu: React.FC<{}> = () => {
   const handleMessages = async ({ type, data }: IMessage) => {
     switch (type) {
       case Messages.DELETE_NOTE_DASHBOARD: {
-        console.log("HELLO");
         await removeNoteFromStorage(data.noteId, data.url);
 
         await fetchNotes();

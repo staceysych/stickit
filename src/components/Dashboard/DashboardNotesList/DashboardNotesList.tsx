@@ -20,8 +20,6 @@ interface DashboardNotes {
 const Menu: React.FC<DashboardNotes> = (props) => {
   const { notes, selectedUrl } = props;
 
-  console.log(selectedUrl);
-
   const groupedNotes = groupBy(notes, "url");
 
   return (

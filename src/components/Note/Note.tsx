@@ -136,7 +136,6 @@ const Note = (props: NotePropsType) => {
   }, [debouncedText]);
 
   useEffect(() => {
-    console.log(note._id, 'updated');
     handleUpdateNotes();
   }, [note]);
 
