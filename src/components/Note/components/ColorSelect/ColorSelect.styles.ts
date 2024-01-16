@@ -1,11 +1,12 @@
-import { makeStyles } from "@mui/styles";
 import reset from "react-style-reset";
+import { makeStyles } from "@mui/styles";
 
-import { globalStyles } from "../../static/styles";
+import { globalStyles } from "../../../../static/styles";
 
 const useStyles = makeStyles(() => ({
   root: {
     ...reset.div,
+    background: "transparent",
     zIndex: "9999999 !important",
 
     "& *": {
@@ -14,7 +15,6 @@ const useStyles = makeStyles(() => ({
   },
 
   list: {
-    background: '#ffffff',
     "& li": {
       padding: "8px",
     },

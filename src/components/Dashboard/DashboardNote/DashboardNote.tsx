@@ -1,9 +1,17 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { omit } from "lodash-es";
-import { NoteColorBadge, NoteBody, ContentContainer } from "./DashboardNote.styled";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
+
 import { NoteType } from "../../../types/noteType";
+
+import {
+  NoteColorBadge,
+  NoteBody,
+  ContentContainer,
+  NoteContainer,
+  DateBlock,
+} from "./DashboardNote.styled";
 import DashboardActionMenu from "../DashboardActionMenu";
+
 import { updateNotesInStorage } from "../../../utils/storage";
 
 interface NotesListItem {
@@ -15,16 +23,21 @@ const DashboardNote: React.FC<NotesListItem> = ({ note: currentNote }) => {
   const [note, setNote] = useState<NoteType>(currentNote);
 
   const handleNoteClick = () => {
-    chrome.tabs.create({url: note.url})
-  }
+    chrome.tabs.create({ url: note.url });
+  };
+
+  useEffect(() => {
+    updateNotesInStorage(omit(note, ["url"]), note.url);
+  }, [note]);
 
   return (
-    <>
+    <NoteContainer onClick={handleNoteClick}>
       <NoteColorBadge background={note.color} />
       <NoteBody>
-        <ContentContainer onClick={handleNoteClick}>
+        <ContentContainer>
           <div>{note.content}</div>
           <DashboardActionMenu
+            color={note.color}
             anchorEl={anchorEl}
             setAnchorEl={setAnchorEl}
             noteId={note._id}
@@ -32,9 +45,9 @@ const DashboardNote: React.FC<NotesListItem> = ({ note: currentNote }) => {
             setNote={setNote}
           />
         </ContentContainer>
-        <div>{new Date(note.createdOn).toJSON().slice(0, 10)}</div>
+        <DateBlock>{new Date(note.createdOn).toJSON().slice(0, 10)}</DateBlock>
       </NoteBody>
-    </>
+    </NoteContainer>
   );
 };
 

@@ -11,6 +11,6 @@ export const globalStyles = () =>
       height: "auto",
       boxShadow: "none",
       padding: 0,
-      margin: 0
+      margin: 0,
     },
   });

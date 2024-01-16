@@ -1,12 +1,14 @@
-import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { NoteType } from "../../../types/noteType";
 
+import { getActions } from "./utils";
+
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import DashboardColorSelect from "../DashboardColorSelect";
 import {
   StyledIconButton,
   StyledMenu,
   StyledMenuItem,
 } from "./DashboardActionMenu.styled";
-import { getActions } from "./utils";
-import { NoteType } from "../../../types/noteType";
 
 interface INoteAction {
   title: string;
@@ -19,6 +21,7 @@ interface DashboardActionMenuProps {
   noteId: string;
   url: string;
   setNote: React.Dispatch<React.SetStateAction<NoteType>>;
+  color: string;
 }
 
 const DashboardActionMenu = ({
@@ -26,23 +29,34 @@ const DashboardActionMenu = ({
   setAnchorEl,
   noteId,
   setNote,
-  url
+  url,
+  color,
 }: DashboardActionMenuProps) => {
   const actions = getActions(noteId, url);
 
   const handleNoteActionClick = (event: React.MouseEvent<HTMLElement>) => {
-    event.stopPropagation()
+    event.stopPropagation();
     setAnchorEl(event.target as HTMLElement);
   };
   const handleNoteActionsClose = (event) => {
-    event.stopPropagation()
+    event.stopPropagation();
     setAnchorEl(null);
   };
 
   const handleActionClick = (action: INoteAction, event) => {
-    event.stopPropagation()
+    event.stopPropagation();
     action.onClick && action.onClick(setNote);
     handleNoteActionsClose(event);
+  };
+
+  const handleChangeColor = (event) => {
+    event.stopPropagation();
+    event.preventDefault();
+
+    setNote((prev) => ({
+      ...prev,
+      color: event.target.value,
+    }));
   };
 
   return (
@@ -61,15 +75,17 @@ const DashboardActionMenu = ({
         open={!!anchorEl}
         onClose={handleNoteActionsClose}
       >
+        <StyledMenuItem>
+          <DashboardColorSelect color={color} onChange={handleChangeColor} />
+        </StyledMenuItem>
         {actions.map((action) => (
           <StyledMenuItem
             key={action.title}
             onClick={(event) => {
-              event.stopPropagation()
-              event.preventDefault()
-              handleActionClick(action, event)}
-            } 
-              
+              event.stopPropagation();
+              event.preventDefault();
+              handleActionClick(action, event);
+            }}
           >
             {action.icon}
             {action.title}

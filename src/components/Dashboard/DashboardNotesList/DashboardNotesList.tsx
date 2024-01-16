@@ -1,5 +1,8 @@
 import React from "react";
 import { groupBy } from "lodash-es";
+
+import { NoteType } from "../../../types/noteType";
+
 import {
   Container,
   Header,
@@ -7,10 +10,9 @@ import {
   NotesList,
   NoteListItemTitle,
   NotesListItem,
-  NoteListGlobalNotification
+  NoteListGlobalNotification,
 } from "./DashboardNotesList.styled";
 import DashboardNote from "../DashboardNote/DashboardNote";
-import { NoteType } from "../../../types/noteType";
 
 interface DashboardNotes {
   notes: NoteType[];
@@ -20,19 +22,27 @@ interface DashboardNotes {
 const Menu: React.FC<DashboardNotes> = (props) => {
   const { notes, selectedUrl } = props;
 
-  const groupedNotes = groupBy(notes, "url");
+  const groupedNotes = groupBy(notes, "pageTitle");
 
   return (
     <Container>
       <Header>{/* SearchInput */}</Header>
       <ListContainer>
-        {(!groupedNotes && selectedUrl) && <NoteListGlobalNotification>There is no notes yet.</NoteListGlobalNotification> }
-        {!selectedUrl && <NoteListGlobalNotification>Please select url from sidebar.</NoteListGlobalNotification> }
+        {!groupedNotes && selectedUrl && (
+          <NoteListGlobalNotification>
+            There is no notes yet.
+          </NoteListGlobalNotification>
+        )}
+        {!selectedUrl && (
+          <NoteListGlobalNotification>
+            Please select url from sidebar.
+          </NoteListGlobalNotification>
+        )}
         {Object.entries(groupedNotes).map(
-          ([url, notes]: [string, NoteType[]]) => {
+          ([pageTitle, notes]: [string, NoteType[]]) => {
             return (
-              <NotesList key={url}>
-                <NoteListItemTitle variant="h6">{url}</NoteListItemTitle>
+              <NotesList key={pageTitle}>
+                <NoteListItemTitle variant="h6">{pageTitle}</NoteListItemTitle>
                 {notes.map((note) => {
                   return (
                     <NotesListItem key={note._id}>

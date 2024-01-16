@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
+import { uniq } from "lodash-es";
+
+import { NoteType } from "../../../types/noteType";
+
 import DashboardSideBar from "../DashboardSideBar";
 import DashboardNotesList from "../DashboardNotesList";
 import { Container } from "./DashboardPage.styled";
-import { NoteType } from "../../../types/noteType";
-import { uniq } from "lodash-es";
+
 import { Messages, IMessageData } from "../../../utils/messages";
 import { removeNoteFromStorage } from "../../../utils/storage";
+
+import "../../../variables.css";
 
 interface IMessage {
   type: Messages;
@@ -61,7 +66,7 @@ const Menu: React.FC<{}> = () => {
       }
     }
   };
-  
+
   useEffect(() => {
     chrome.runtime.onMessage.addListener(handleMessages);
     return () => {
@@ -76,7 +81,10 @@ const Menu: React.FC<{}> = () => {
   return (
     <Container>
       <DashboardSideBar urls={urls} handleSelectUrl={handleSelectUrl} />
-      <DashboardNotesList notes={notes[selectedUrl]} selectedUrl={selectedUrl} />
+      <DashboardNotesList
+        notes={notes[selectedUrl]}
+        selectedUrl={selectedUrl}
+      />
     </Container>
   );
 };

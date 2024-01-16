@@ -52,6 +52,7 @@ chrome.tabs.onUpdated.addListener(async (tabId, _, tab) => {
         type: Messages.NEW_PAGE,
         data: {
           url: tab.url,
+          title: tab.title
         },
       },
       () => chrome.runtime.lastError

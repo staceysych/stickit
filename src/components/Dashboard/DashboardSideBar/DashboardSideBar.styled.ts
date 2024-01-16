@@ -1,14 +1,15 @@
-import { ListItem, List, Typography } from "@mui/material";
 import styled from "styled-components";
+
+import { ListItem, List, Typography } from "@mui/material";
 
 export const Container = styled.div`
   width: 20%;
   min-width: 200px;
   display: flex;
   flex-direction: column;
-  color: #000000;
+  color: var(--black);
   padding: 15px;
-  border-right: 1px solid #d2d2d2;
+  border-right: 1px solid var(--gray-1);
 `;
 
 export const Header = styled.div`
@@ -33,7 +34,7 @@ export const LinkListItem = styled(ListItem)`
   cursor: pointer;
 
   &:hover {
-    background-color: #adadad;
+    background-color: var(--gray-2);
   }
 `;
 

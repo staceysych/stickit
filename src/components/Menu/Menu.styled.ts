@@ -6,7 +6,7 @@ export const StyledList = styled(List)`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #ffffff1c;
+  background-color: var(--list-background);
   width: 200px;
 `;
 
@@ -20,10 +20,10 @@ export const StyledListItem = styled(ListItem)`
   margin: 0 8px;
 
   &:hover {
-    background-color: #f5f5f51a;
+    background-color: var(--menu-hover);
   }
 
-  "& svg": {
+  & svg {
     max-height: 20px;
     max-width: 20px;
   }

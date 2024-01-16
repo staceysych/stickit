@@ -1,8 +1,10 @@
-import { Card, Box, Typography, IconButton, TextField } from "@mui/material";
 import { Rnd } from "react-rnd";
 import styled from "styled-components";
-import { colorPalette } from "../../utils/colors";
 import reset from "react-style-reset";
+
+import { Card, Box, Typography, IconButton, TextField } from "@mui/material";
+
+import { colorPalette } from "../../utils/colors";
 
 interface StyledHeaderProps {
   background: string;
@@ -68,7 +70,7 @@ export const StyledHeaderText = styled(Typography)``;
 export const StyledHeaderActions = styled(IconButton)`
   font-size: 20px !important;
   > svg {
-    color: #ffffff;
+    color: var(--white);
   }
 `;
 
@@ -103,7 +105,7 @@ export const StyledTextField = styled(TextField)`
     border: none !important;
     background: none !important;
     height: 100% !important;
-    color: #000000 !important;
+    color: var(--black) !important;
     overflow-y: scroll !important;
   }
 `;

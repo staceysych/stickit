@@ -12,7 +12,8 @@ export interface IMessageData {
   url: string;
   currentNote: NoteType;
   noteId: string;
-  content: string
+  content: string;
+  pageTitle: string;
 }
 
 export const sendMessageToBackground = (

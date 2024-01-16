@@ -7,7 +7,7 @@ import { updateNotesInStorage } from "../../utils/storage";
 import { FULL_SIZE } from "../../utils/defaults";
 
 import { NoteType } from "../../types/noteType";
-import NoteActions from "../NoteActions/NoteActions";
+import NoteActions from "./components/NoteActions/NoteActions";
 import { isEqual } from "lodash-es";
 
 import {
@@ -136,6 +136,7 @@ const Note = (props: NotePropsType) => {
   }, [debouncedText]);
 
   useEffect(() => {
+    console.log(note);
     handleUpdateNotes();
   }, [note]);
 
@@ -149,7 +150,7 @@ const Note = (props: NotePropsType) => {
         height: 0,
         top: 0,
         left: 0,
-        background: 'transparent',
+        background: "transparent",
         position: isPinned ? "fixed" : "absolute",
         zIndex: 9999,
       }}
@@ -194,6 +195,7 @@ const Note = (props: NotePropsType) => {
               setAnchorEl={setAnchorEl}
               noteId={note._id}
               setNote={setNote}
+              color={color}
             />
           </StyledHeader>
 

@@ -1,15 +1,15 @@
+import { NoteType } from "../../../../types/noteType";
+
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
 import {
   StyledIconButton,
   StyledMenu,
   StyledMenuItem,
 } from "./NoteActions.styled";
-import useStyles from "./NoteActions.styles";
 import { getActions } from "./utils";
-import { NoteType } from "../../types/noteType";
+import ColorSelect from "../ColorSelect";
+
+import useStyles from "./NoteActions.styles";
 
 interface INoteAction {
   title: string;
@@ -22,6 +22,7 @@ interface NoteActionsProps {
   noteId: string;
   setNote: React.Dispatch<React.SetStateAction<NoteType>>;
   isMinimized: boolean;
+  color: string;
 }
 
 const NoteActions = ({
@@ -30,6 +31,7 @@ const NoteActions = ({
   noteId,
   setNote,
   isMinimized,
+  color,
 }: NoteActionsProps) => {
   const actions = getActions(noteId);
 
@@ -39,6 +41,16 @@ const NoteActions = ({
   };
   const handleNoteActionsClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleChangeColor = (event) => {
+    event.stopPropagation();
+    event.preventDefault();
+
+    setNote((prev) => ({
+      ...prev,
+      color: event.target.value,
+    }));
   };
 
   const handleActionClick = (action: INoteAction) => {
@@ -63,6 +75,9 @@ const NoteActions = ({
         onClose={handleNoteActionsClose}
         classes={classes}
       >
+        <StyledMenuItem id="color-menu">
+          <ColorSelect color={color} onChange={handleChangeColor} />
+        </StyledMenuItem>
         {actions.map((action) => (
           <StyledMenuItem
             key={action.title}

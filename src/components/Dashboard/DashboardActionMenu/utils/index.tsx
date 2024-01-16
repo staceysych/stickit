@@ -1,5 +1,5 @@
 import { Messages, sendMessageToBackground } from "../../../../utils/messages";
-import { DeleteForever, CloseFullscreen } from "@mui/icons-material";
+import { DeleteForever } from "@mui/icons-material";
 
 const confirmDeletion = (noteId: string, url: string) => {
   const result = window.confirm("Are you sure you want to delete the note?");

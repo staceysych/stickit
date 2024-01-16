@@ -1,6 +1,7 @@
-import { IconButton, Menu, MenuItem } from "@mui/material";
 import styled from "styled-components";
 import reset from "react-style-reset/string";
+
+import { IconButton, Menu, MenuItem } from "@mui/material";
 
 interface StyledIconButtonProps {
   isMinimized: boolean;
@@ -11,7 +12,7 @@ export const StyledIconButton = styled(IconButton)<StyledIconButtonProps>`
   font-size: 20px !important;
 
   > svg {
-    color: #ffffff;
+    color: var(--white);
   }
 `;
 

@@ -1,5 +1,7 @@
-import { List, ListItem, Typography } from "@mui/material";
 import styled from "styled-components";
+
+import { List, ListItem, Typography } from "@mui/material";
+
 import { colorPalette } from "../../../utils/colors";
 
 interface NoteColorBadge {
@@ -10,7 +12,7 @@ export const Container = styled.div`
   width: 100%;
   height: 100%;
   padding: 20px;
-  color: #000000;
+  color: var(--black);
   overflow: hidden;
 `;
 
@@ -28,7 +30,7 @@ export const ListContainer = styled.div`
 
 export const NotesList = styled(List)`
   width: 100%;
-  border-bottom: 1px #adadadad;
+  border-bottom: 1px var(--gray-2);
 `;
 
 export const NotesListItem = styled(ListItem)`
@@ -38,7 +40,7 @@ export const NotesListItem = styled(ListItem)`
   border-radius: 8px;
 
   &:hover {
-    background-color: #adadadad;
+    background-color: var(--gray-2);
     cursor: pointer;
   }
 `;
@@ -62,7 +64,7 @@ export const NoteColorBadge = styled.div<NoteColorBadge>`
 export const NoteBody = styled.div`
   width: 95%;
   font-size: 16px;
-`
+`;
 
 export const NoteListGlobalNotification = styled.div`
   width: 100%;
@@ -71,4 +73,4 @@ export const NoteListGlobalNotification = styled.div`
   justify-content: center;
   align-items: center;
   font-size: large;
-`
+`;

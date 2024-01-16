@@ -7,11 +7,12 @@ export type NoteType = {
   color: string;
   content: string;
   createdOn: Date;
-  isPinned: boolean,
+  isPinned: boolean;
+  pageTitle: string;
   minimize: {
-    enabled: boolean,
-    height: number,
-    left: number
-  }
-  url?: string
+    enabled: boolean;
+    height: number;
+    left: number;
+  };
+  url?: string;
 };
