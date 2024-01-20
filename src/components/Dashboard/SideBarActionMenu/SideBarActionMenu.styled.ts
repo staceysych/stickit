@@ -1,25 +1,28 @@
 import { IconButton, Menu, MenuItem } from "@mui/material";
+
 import styled from "styled-components";
-import reset from "react-style-reset/string";
 
 export const StyledIconButton = styled(IconButton)`
+  height: 25px;
+  width: 25px;
+
   > svg {
-    color: #ffffff;
+    color: var(--black);
   }
 `;
 
 export const StyledMenu = styled(Menu)`
-  ${reset};
+  font-size: 14px;
   box-sizing: border-box;
   background: none;
   border-radius: 0;
   border: none;
-  width: auto;
-  height: auto;
   box-shadow: none;
 `;
+
 export const StyledMenuItem = styled(MenuItem)`
-  ${reset};
+  width: 150px;
+  font-size: 14px;
   display: flex;
   align-items: center;
   justify-content: flex-start;

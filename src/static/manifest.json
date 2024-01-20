@@ -4,15 +4,15 @@
   "version": "1.0.0",
   "manifest_version": 3,
   "icons": {
-    "32": "icon-32.png",
-    "128": "icon-128.png"
+    "32": "icon.png",
+    "128": "icon.png"
   },
   "action": {
     "default_popup": "popup.html",
-    "default_title": "Weather Extension"
+    "default_title": "Note Extension"
   },
   "permissions": ["storage", "tabs", "scripting", "contextMenus"],
-  "options_page": "options.html",
+  "options_page": "dashboard.html",
   "background": {
     "service_worker": "background.js"
   },

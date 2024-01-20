@@ -1,8 +1,10 @@
-import { Card, Box, Typography, IconButton, TextField } from "@mui/material";
 import { Rnd } from "react-rnd";
 import styled from "styled-components";
-import { colorPalette } from "../../utils/colors";
 import reset from "react-style-reset";
+
+import { Card, Box, Typography, IconButton, TextField } from "@mui/material";
+
+import { colorPalette } from "../../utils/colors";
 
 interface StyledHeaderProps {
   background: string;
@@ -25,8 +27,8 @@ export const StyledRnd = styled(Rnd)<StyledRndProps>`
   position: ${(props) => (props.isPinned ? "fixed" : "absolute")} !important;
   padding: 0;
   margin: 0;
-  z-index: 9999;
-  transition: transform 0.3s ease-in-out, height 0.3s ease-in-out;
+  z-index: 999999;
+  font-size: 16px !important;
 `;
 
 export const StyledCard = styled(Card)`
@@ -40,7 +42,6 @@ export const StyledCard = styled(Card)`
   width: 100%;
   height: 100%;
   border-radius: 8px !important;
-  transition: transform 0.3s ease-in-out, height 0.3s ease-in-out;
 
   * {
     box-sizing: border-box;
@@ -67,8 +68,9 @@ export const StyledHeader = styled(Box)<StyledHeaderProps>`
 `;
 export const StyledHeaderText = styled(Typography)``;
 export const StyledHeaderActions = styled(IconButton)`
+  font-size: 20px !important;
   > svg {
-    color: #ffffff;
+    color: var(--white);
   }
 `;
 
@@ -94,11 +96,16 @@ export const StyledTextField = styled(TextField)`
   }
 
   fieldset {
-    border: none;
+    border: none !important;
   }
 
   textarea {
+    font-size: 16px !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: none !important;
     height: 100% !important;
-    color: #000000;
+    color: var(--black) !important;
+    overflow-y: scroll !important;
   }
 `;

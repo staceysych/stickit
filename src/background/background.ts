@@ -20,6 +20,7 @@ chrome.contextMenus.onClicked.addListener(async (item, tab) => {
         type: Messages.NEW_NOTE,
         data: {
           content: selectionText,
+          pageTitle: tab.title
         },
       },
       () => chrome.runtime.lastError
@@ -32,8 +33,20 @@ interface IMessage {
   data: any;
 }
 
+const sendMessagesToAllTabs = (message: IMessage) => {
+  const sendToAllTabs = message.data.isSendToAllTabs ? true : false;
+
+  console.log(sendToAllTabs);
+  chrome.tabs.query({}, (tabs) => {
+    tabs.forEach((tab) => {
+      chrome.tabs.sendMessage(tab.id, message, () => chrome.runtime.lastError);
+    });
+  });
+};
+
 const sendMessagesToContentScript = (message: IMessage) => {
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    console.log(tabs);
     if (tabs[0].id) {
       chrome.tabs.sendMessage(
         tabs[0].id,
@@ -52,6 +65,7 @@ chrome.tabs.onUpdated.addListener(async (tabId, _, tab) => {
         type: Messages.NEW_PAGE,
         data: {
           url: tab.url,
+          title: tab.title,
         },
       },
       () => chrome.runtime.lastError
@@ -66,6 +80,10 @@ chrome.tabs.onUpdated.addListener(async (tabId, _, tab) => {
 });
 
 chrome.runtime.onMessage.addListener((message) => {
+  if (message.data.isSendToAllTabs) {
+    return sendMessagesToAllTabs(message)
+  } 
+
   sendMessagesToContentScript(message);
 });
 

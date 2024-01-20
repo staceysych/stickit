@@ -3,7 +3,7 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
+  color-scheme: light;
 }
 
 * {
@@ -15,4 +15,15 @@ body {
   display: flex;
   place-items: center;
   min-width: 200px;
+}
+
+.container {
+  margin: 0 auto;
+  width: 80%;
+}
+
+@media (max-width: 1366px) {
+  .container {
+    width: 100vw;
+  }
 }

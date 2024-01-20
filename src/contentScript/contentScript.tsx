@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import "./contentScript.css";
 
@@ -13,6 +13,8 @@ import "./contentScript.css";
 
 import Note from "../components/Note";
 
+import "../variables.css";
+
 interface IMessage {
   type: Messages;
   data: IMessageData;
@@ -25,9 +27,15 @@ const App = () => {
   const handleMessages = async ({ type, data }: IMessage) => {
     switch (type) {
       case Messages.NEW_NOTE: {
+        console.log(data);
         const content = data.content || "";
+        const pageTitle = data.pageTitle || "";
 
-        const newNote = await addNoteToStorage(currentPageUrl, content);
+        const newNote = await addNoteToStorage(
+          currentPageUrl,
+          content,
+          pageTitle
+        );
         setNotes((prevNotes) => [...prevNotes, newNote]);
 
         break;
@@ -35,6 +43,15 @@ const App = () => {
       case Messages.NEW_PAGE: {
         setCurrentPageUrl(data.url);
         const notes = await fetchNotes(data.url);
+
+        setNotes(notes);
+
+        break;
+      }
+      case Messages.NOTES_IMPORTED:
+      case Messages.DELETE_NOTE_DASHBOARD:
+      case Messages.ALL_NOTES_DELETED: {
+        const notes = await fetchNotes(currentPageUrl);
 
         setNotes(notes);
 
@@ -87,6 +104,14 @@ root.classList.add("notes-container");
 
 const boundsElement = document.createElement("div");
 boundsElement.classList.add("bounds-container");
+
+const { clientHeight } = document.body;
+const { innerHeight } = window;
+
+boundsElement.style.height =
+  clientHeight > innerHeight
+    ? document.body.clientHeight + "px"
+    : window.innerHeight + "px";
 
 document.body.appendChild(root);
 document.body.appendChild(boundsElement);
