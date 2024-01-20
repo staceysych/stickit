@@ -6,6 +6,8 @@ export enum Messages {
   DELETE_ALL,
   DELETE_NOTE,
   DELETE_NOTE_DASHBOARD,
+  NOTES_IMPORTED,
+  ALL_NOTES_DELETED,
 }
 
 export interface IMessageData {
@@ -14,6 +16,7 @@ export interface IMessageData {
   noteId: string;
   content: string;
   pageTitle: string;
+  isSendToAllTabs: boolean;
 }
 
 export const sendMessageToBackground = (

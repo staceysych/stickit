@@ -1,7 +1,7 @@
 import React from "react";
 import { capitalize } from "@mui/material";
 
-import { StyledSelect, StyledSelectItem } from "./ColorSelect.styled";
+import { NoteColorBadge, StyledSelect, StyledSelectItem } from "./ColorSelect.styled";
 import { SelectChangeEvent } from "@mui/material/Select";
 
 import useStyles from "./ColorSelect.styles";
@@ -31,7 +31,8 @@ const ColorSelect: React.FC<NotesListItem> = ({ color, onChange }) => {
     >
       {Object.keys(colorPalette).map((color) => {
         return (
-          <StyledSelectItem key={color} value={color} background={color}>
+          <StyledSelectItem key={color} value={color} >
+            <NoteColorBadge background={color} />
             {capitalize(color)}
           </StyledSelectItem>
         );

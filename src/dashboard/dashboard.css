@@ -16,3 +16,14 @@ body {
   place-items: center;
   min-width: 200px;
 }
+
+.container {
+  margin: 0 auto;
+  width: 80%;
+}
+
+@media (max-width: 1366px) {
+  .container {
+    width: 100vw;
+  }
+}

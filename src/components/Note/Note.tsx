@@ -50,7 +50,9 @@ const Note = (props: NotePropsType) => {
   const [debouncedText] = useDebounce(text, 400);
 
   const handleUpdateNotes = async () => {
-    updateNotesInStorage(note, currentPageUrl);
+    if (!isEqual(note, currentNote)) {
+      updateNotesInStorage(note, currentPageUrl);
+    }
   };
 
   const onResizeStart = () => {
@@ -92,12 +94,14 @@ const Note = (props: NotePropsType) => {
   };
 
   const handleDebounceChange = () => {
-    const updateNote = {
-      ...note,
-      content: debouncedText,
-    };
-
-    setNote(updateNote);
+    if (note.content !== debouncedText) {
+      const updateNote = {
+        ...note,
+        content: debouncedText,
+      };
+  
+      setNote(updateNote);
+    }
   };
 
   const handlePinNote = (e) => {
@@ -136,7 +140,6 @@ const Note = (props: NotePropsType) => {
   }, [debouncedText]);
 
   useEffect(() => {
-    console.log(note);
     handleUpdateNotes();
   }, [note]);
 

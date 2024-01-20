@@ -10,6 +10,8 @@ import {
 } from "./DashboardSideBar.styled";
 import SettingsIcon from "@mui/icons-material/Settings";
 
+import SideBarActionMenu from '../SideBarActionMenu'
+
 interface DashboardSideBarPropsType {
   handleSelectUrl: (url: string) => void;
   urls: string[];
@@ -17,6 +19,7 @@ interface DashboardSideBarPropsType {
 
 const DashboardSideBar: React.FC<DashboardSideBarPropsType> = (props) => {
   const { urls, handleSelectUrl } = props;
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   return (
     <Container>
@@ -31,7 +34,7 @@ const DashboardSideBar: React.FC<DashboardSideBarPropsType> = (props) => {
         ))}
       </LinkList>
       <Footer>
-        <SettingsIcon fontSize="medium" />
+        <SideBarActionMenu anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
       </Footer>
     </Container>
   );

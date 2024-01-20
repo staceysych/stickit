@@ -15,6 +15,8 @@ const useStyles = makeStyles(() => ({
   },
 
   list: {
+    padding: '0 !important',
+
     "& li": {
       padding: "8px",
     },

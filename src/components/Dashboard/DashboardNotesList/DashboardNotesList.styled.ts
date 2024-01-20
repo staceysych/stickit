@@ -23,7 +23,7 @@ export const Header = styled.div`
 
 export const ListContainer = styled.div`
   width: 100%;
-  height: 90%;
+  height: 99%;
   overflow-y: scroll;
   overflow-x: hidden;
 `;

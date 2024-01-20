@@ -5,7 +5,7 @@ import { Select, MenuItem } from "@mui/material";
 
 import { colorPalette } from "../../../../utils/colors";
 
-interface StyledSelectItemProps {
+interface NoteColorBadge {
   background: string;
 }
 
@@ -13,6 +13,12 @@ export const StyledSelect = styled(Select)`
   ${reset};
   width: 100% !important;
   border: none;
+
+  & > div {
+    display: flex;
+    gap: 7px;
+    align-items: center;
+  }
 
   &::before {
     content: none !important;
@@ -26,7 +32,20 @@ export const StyledSelect = styled(Select)`
     color: var(--black);
   }
 `;
-export const StyledSelectItem = styled(MenuItem)<StyledSelectItemProps>`
+
+export const NoteColorBadge = styled.div<NoteColorBadge>`
   ${reset};
-  background: ${(props) => colorPalette[props.background].main} !important;
+  align-self: center;
+  width: 17px !important;
+  height: 17px !important;
+  border-radius: 50% !important;
+  background-color: ${(props) =>
+    colorPalette[props.background].main} !important;
+`;
+
+export const StyledSelectItem = styled(MenuItem)`
+  ${reset};
+  display: flex;
+  gap: 10px;
+  align-items: center;
 `;

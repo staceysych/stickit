@@ -48,6 +48,15 @@ const App = () => {
 
         break;
       }
+      case Messages.NOTES_IMPORTED:
+      case Messages.DELETE_NOTE_DASHBOARD:
+      case Messages.ALL_NOTES_DELETED: {
+        const notes = await fetchNotes(currentPageUrl);
+
+        setNotes(notes);
+
+        break;
+      }
       case Messages.DELETE_ALL: {
         const result = window.confirm(
           "Are you sure you want to delete all notes from this page?"

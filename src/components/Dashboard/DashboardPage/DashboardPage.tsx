@@ -34,6 +34,7 @@ const Menu: React.FC<{}> = () => {
       const formattedNote = {} as NoteType[];
       const hostnames = [];
       Object.entries(fetchedNotes).forEach(([key, value]) => {
+        if (!key) return
         const parsedData = JSON.parse(value).map((val) => ({
           ...val,
           url: key,
@@ -55,6 +56,12 @@ const Menu: React.FC<{}> = () => {
 
   const handleMessages = async ({ type, data }: IMessage) => {
     switch (type) {
+      case Messages.ALL_NOTES_DELETED:
+      case Messages.NOTES_IMPORTED: {
+        await fetchNotes();
+
+        break;
+      }
       case Messages.DELETE_NOTE_DASHBOARD: {
         await removeNoteFromStorage(data.noteId, data.url);
 

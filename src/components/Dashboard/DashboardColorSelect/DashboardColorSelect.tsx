@@ -1,6 +1,7 @@
 import React from "react";
 import { StyledSelect, StyledSelectItem } from "./DashboardColorSelect.styled";
 import { colorPalette } from "../../../utils/colors";
+import { NoteColorBadge } from "../DashboardNote/DashboardNote.styled";
 
 import { SelectChangeEvent } from "@mui/material/Select";
 import { capitalize } from "@mui/material";
@@ -25,7 +26,8 @@ const DashboardColorSelect: React.FC<NotesListItem> = ({ color, onChange }) => {
     >
       {Object.keys(colorPalette).map((color) => {
         return (
-          <StyledSelectItem key={color} value={color} background={color}>
+          <StyledSelectItem key={color} value={color}>
+            <NoteColorBadge background={color}/>
             {capitalize(color)}
           </StyledSelectItem>
         );

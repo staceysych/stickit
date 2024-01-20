@@ -21,7 +21,7 @@ export const StyledMenu = styled(Menu)`
 `;
 
 export const StyledMenuItem = styled(MenuItem)`
-  width: 170px;
+  width: 150px;
   font-size: 14px;
   display: flex;
   align-items: center;
